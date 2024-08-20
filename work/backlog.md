@@ -11,8 +11,8 @@ Goal: *get some sample Data into a Serra Vine instance*.
 * Setup project structure.
   * [ ] Repository layout for source code, tests and documentation.
   * [ ] Running minimal test.
-  * [ ] Running cli application.
-  * [ ] Setup Python env
+  * [x] Running cli application.
+  * [x] Setup Python env
 
 ## Next
 

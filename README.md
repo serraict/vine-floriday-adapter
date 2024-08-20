@@ -18,7 +18,7 @@ make bootstrap
  make update
 ```
 
-
+Now you can run and debug the command line script `floridayvine`.
 
 ---
 
