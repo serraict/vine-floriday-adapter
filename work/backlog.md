@@ -6,20 +6,16 @@ Repository is setup at <https://github.com/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-Writing project plan.
-
-* [x] We have the first vision on what this adapter can be.
-* [x] We have a first version of an actionable backlog with some clear goals and action items.
-* [x] Documented in this repository.
-
-## Next
-
 Goal: *get some sample Data into a Serra Vine instance*.
 
 * Setup project structure.
   * [ ] Repository layout for source code, tests and documentation.
   * [ ] Running minimal test.
   * [ ] Running cli application.
+  * [ ] Setup Python env
+
+## Next
+
 * Test data is uploaded to Serra Vine.
   * [ ] Generate test data in the form of json documents.
   * [ ] Documents are uploaded to Serra Vine's Minio server.
