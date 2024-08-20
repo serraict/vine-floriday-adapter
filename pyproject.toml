@@ -1,0 +1,24 @@
+[project]
+name = "floridayvine"
+description = "Serra Vine adapter for Floriday trade information."
+authors = [
+    { name = "Marijn van der Zee", email = "marijn@serraict.com" },
+    { name = "gpt-4o", email = "marijn+ai@serraict.com" },
+]
+requires-python = ">=3.10"
+urls = { "project" = "https://github.com/serraict/vine-floriday-adapter", "docs" = "https://github.com/serraict/vine-floriday-adapter/blob/main/README.md" }
+dependencies = ["typer"]
+dynamic = ["version"]
+license.file = "LICENCE"
+
+[build-system]
+requires = ["setuptools>=64", "setuptools_scm>=8"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+optech = "optech:__main__.main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools_scm]

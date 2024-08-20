@@ -1,0 +1,4 @@
+toml
+GitPython
+setuptools_scm>=8
+pytest
