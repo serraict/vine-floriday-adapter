@@ -9,7 +9,7 @@ update:
 	pip install -e .
 console:
 test:
-	pytest
+	pytest -m "not integration"
 build:
 	python -m build
 documentation:

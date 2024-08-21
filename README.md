@@ -29,7 +29,8 @@ Or run the following to see all options:
 floridayvine --help
 ```
 
-Once the files are uploaded to Minio, you can create a virtual dataset in your datalake as described in this [Serra Learning on formatting a directory as a dataset].
+Once the files are uploaded to Minio, you can create a virtual dataset in your data lake
+as described in this [Serra Learning on formatting a directory as a dataset].
 
 ---
 

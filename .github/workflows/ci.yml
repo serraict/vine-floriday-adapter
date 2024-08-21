@@ -28,4 +28,4 @@ jobs:
         make update
     - name: Test with pytest
       run: |
-        pytest
+        make test

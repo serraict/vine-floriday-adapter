@@ -22,3 +22,8 @@ floridayvine = "floridayvine:__main__.main"
 where = ["src"]
 
 [tool.setuptools_scm]
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: integration tests that require an operational Serra Vine system (deselect with '-m \"not integration\"')",
+]
