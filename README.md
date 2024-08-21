@@ -20,8 +20,20 @@ make bootstrap
 
 Now you can run and debug the command line script `floridayvine`.
 
+## Usage
+
+See the [tests](./tests) directory for example usages.
+Or run the following to see all options:
+
+```bash
+floridayvine --help
+```
+
+Once the files are uploaded to Minio, you can create a virtual dataset in your datalake as described in this [Serra Learning on formatting a directory as a dataset].
+
 ---
 
  [Floriday]: https://www.floriday.io/en/home
  [Serra Vine]: https://vine.serraict.com
  [backlog]: ./work/backlog.md
+ [Serra Learning on formatting a directory as a dataset]: https://serra.fibery.io/Public/Learning/Een-virtuele-dataset-maken-van-een-directory-met-json-bestanden-247?sharing-key=b3769410-f4ab-4926-800e-87e345f535b2

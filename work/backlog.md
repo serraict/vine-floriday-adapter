@@ -9,9 +9,9 @@ Repository is setup at <https://github.com/serraict/vine-floriday-adapter>.
 Goal: *get some sample Data into a Serra Vine instance*.
 
 * Test data is uploaded to Serra Vine.
-  * [ ] Generate test data in the form of json documents.
-  * [ ] Documents are uploaded to Serra Vine's Minio server.
-  * [ ] The documents are combined into a virtual dataset in Serra Vine's data lake.
+  * [x] Generate test data in the form of json documents.
+  * [x] Documents are uploaded to Serra Vine's Minio server.
+  * [x] The documents are combined into a virtual dataset in Serra Vine's data lake.
 
 ## Next
 
