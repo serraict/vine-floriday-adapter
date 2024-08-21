@@ -10,6 +10,8 @@ update:
 console:
 test:
 	pytest -m "not integration"
+test-integration:
+	pytest -m "integration"
 build:
 	python -m build
 documentation:
