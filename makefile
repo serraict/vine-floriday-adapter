@@ -40,6 +40,6 @@ release:
 docker_image:
 	docker build -t ghcr.io/serraict/flordidayvine:$(VERSION) .
 docker_push: docker_image
-	docker push ghcr.io/serraict/flordidayvine
+	docker push ghcr.io/serraict/flordidayvine:$(VERSION)
 docker_run:
 	docker run --env-file=.env floridayvine
