@@ -1,7 +1,7 @@
 from minio import Minio
 import os
 
-minio_endpoint = os.getenv("MINIO_ENDPOINT")
+minio_endpoint = os.getenv("MINIO_ENDPOINT", "play.min.io")
 minio_access_key = os.getenv("MINIO_ACCESS_KEY")
 minio_secret_key = os.getenv("MINIO_SECRET_KEY")
 
