@@ -1,16 +1,15 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: CI
+name: Package
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags: [ "v*" ]
 
 permissions:
   contents: read
+  packages: write
 
 jobs:
   build:
@@ -32,3 +31,6 @@ jobs:
     - name: Package
       run: |
         make docker_image
+    - name: Publish
+      run: |
+        make docker_push

@@ -1,5 +1,10 @@
 .phony : all
 
+VERSION := $(shell git describe --tags)
+ifeq ($(VERSION),)
+    VERSION := v0.0.1
+endif
+
 bootstrap:
 	python -m venv venv
 	@echo "Run 'source venv/bin/activate' to activate the virtual environment, followed by 'make update' to install dependencies."
@@ -32,3 +37,9 @@ release:
 	fi
 	@git tag v$$(python -m setuptools_scm --strip-dev)
 	@git push origin --tags
+docker_image:
+	docker build -t ghcr.io/serraict/flordidayvine:$(VERSION) .
+docker_push: docker_image
+	docker push ghcr.io/serraict/flordidayvine
+docker_run:
+	docker run --env-file=.env floridayvine

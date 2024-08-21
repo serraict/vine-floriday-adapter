@@ -6,16 +6,16 @@ Repository is setup at <https://github.com/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-Goal: *get some sample Data into a Serra Vine instance*.
-
-* Test data is uploaded to Serra Vine.
-  * [x] Generate test data in the form of json documents.
-  * [x] Documents are uploaded to Serra Vine's Minio server.
-  * [x] The documents are combined into a virtual dataset in Serra Vine's data lake.
+* Create a Docker image
+  * As part of build script
+  * Publish (to docker hub or similar)
 
 ## Next
 
-Nothing
+* Goal: make it deployable
+  * Add the Docker image to Serra Vine
+  * Have a cronjob of some kind that periodically runs the upload
+  * Refactor configuration variables and command line parameters
 
 ## Later
 
