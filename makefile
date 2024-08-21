@@ -38,8 +38,8 @@ release:
 	@git tag v$$(python -m setuptools_scm --strip-dev)
 	@git push origin --tags
 docker_image:
-	docker build -t ghcr.io/serraict/flordidayvine:$(VERSION) .
+	docker build -t ghcr.io/serraict/vine-floriday-adapter:$(VERSION) .
 docker_push: docker_image
-	docker push ghcr.io/serraict/flordidayvine:$(VERSION)
+	docker push ghcr.io/serraict/vine-floriday-adapter:$(VERSION)
 docker_run:
-	docker run --env-file=.env floridayvine
+	docker run --env-file=.env vine-floriday-adapter
