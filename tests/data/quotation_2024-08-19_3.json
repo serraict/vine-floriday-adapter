@@ -1,0 +1,22 @@
+{
+    "quotation_number": 3,
+    "date": "2024-08-19",
+    "customer_name": "Jane Doe",
+    "items": [
+        {
+            "name": "Item 1",
+            "quantity": 1,
+            "price": 28.69
+        },
+        {
+            "name": "Item 2",
+            "quantity": 5,
+            "price": 94.18
+        },
+        {
+            "name": "Item 3",
+            "quantity": 8,
+            "price": 87.03
+        }
+    ]
+}

@@ -11,13 +11,13 @@ Goal: *get some sample Data into a Serra Vine instance*.
 * Test data is uploaded to Serra Vine.
   * [ ] Generate test data in the form of json documents.
   * [ ] Documents are uploaded to Serra Vine's Minio server.
-  * [ ] THe documents are combined into a virtual dataset in Serra Vine's data lake.
+  * [ ] The documents are combined into a virtual dataset in Serra Vine's data lake.
 
 ## Next
 
 Nothing
 
-## Backlog
+## Later
 
 * Goal: connect to Floriday.
   * Setup Floriday account
@@ -26,3 +26,5 @@ Nothing
 * Goal: show open quotations for a supplier on Floriday.
   * retrieve "Supply Line" information
   * create a Serra Vine dashboard for open quotations
+
+## Out of Scope

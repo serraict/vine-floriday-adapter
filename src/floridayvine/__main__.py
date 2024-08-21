@@ -1,5 +1,6 @@
 import typer
 from importlib.metadata import version
+from .minio import upload_directory
 
 app = typer.Typer()
 
@@ -19,6 +20,11 @@ def about():
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
     print(f"v{get_version()}")
+
+
+@app.command()
+def upload(path: str):
+    upload_directory("floridayvine-testbucket", "quotations", path)
 
 
 def main():
