@@ -3,17 +3,22 @@
 ## Done
 
 Repository is setup at <https://github.com/serraict/vine-floriday-adapter>.
+Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-* Create a Docker image
-  * As part of build script
-  * Publish (to docker hub or similar)
+Add the Docker image to Serra Vine.
+
+* [ ] The image works out-of-the-box so that we can test integration with our Serra Vine instance.
+  * [ ] url of minio server is configurable
+  * [ ] credentials are configurable form the Serra Vine Host
+  * [ ] location of source (test) data is configurable
+* [ ] Write a manual on how to include it in Serra Vine
 
 ## Next
 
 * Goal: make it deployable
-  * Add the Docker image to Serra Vine
+
   * Have a cronjob of some kind that periodically runs the upload
   * Refactor configuration variables and command line parameters
 

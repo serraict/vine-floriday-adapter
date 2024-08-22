@@ -14,11 +14,14 @@ Checkout this repository. Then:
 
 ```bash
 make bootstrap
- . ./venv/bin/activate
- make update
+. ./venv/bin/activate
+make update
 ```
 
 Now you can run and debug the command line script `floridayvine`.
+
+The application is published as a Docker container to <ghcr.io/serraict/vine-floriday-adapter>.
+A new container is pushed on each release tag.
 
 ## Usage
 
