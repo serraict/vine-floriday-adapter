@@ -1,6 +1,7 @@
 import typer
 from importlib.metadata import version
 from .minio import upload_directory
+import os
 
 app = typer.Typer()
 
@@ -20,6 +21,7 @@ def about():
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
     print(f"v{get_version()}")
+    print(f"Minio endpoint: {os.getenv('MINIO_ENDPOINT', 'play.min.io')}")
 
 
 @app.command()

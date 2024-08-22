@@ -6,7 +6,9 @@ services:
     networks:
       - serra-vine
     volumes:
-      - ./floridayvine-cronjob:/etc/cron.d/floridayvine-crontab:ro
+      - ./floridayvine-crontab:/etc/cron.d/floridayvine-crontab:ro
+    env_file:
+      - ./serra-vine.env
     environment:
       - TZ=UTC
     restart: on-failure
