@@ -16,10 +16,9 @@ RUN pip install --upgrade pip setuptools wheel setuptools_scm
 RUN pip install --no-cache-dir --upgrade .
 
 RUN touch /var/log/cron.log
-RUN chmod 666 /var/log/cron.log
 
 CMD floridayvine about \
     && echo "Started floriday-vine container." \
-    && printenv \
+    && printenv > /etc/environment \
     && cron \
     && tail -f /var/log/cron.log
