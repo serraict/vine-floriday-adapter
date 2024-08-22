@@ -41,5 +41,5 @@ docker_image:
 	docker build -t ghcr.io/serraict/vine-floriday-adapter:$(VERSION) .
 docker_push: docker_image
 	docker push ghcr.io/serraict/vine-floriday-adapter:$(VERSION)
-docker_run:
-	docker run --env-file=.env vine-floriday-adapter
+docker_compose_debug:
+	docker compose up --build

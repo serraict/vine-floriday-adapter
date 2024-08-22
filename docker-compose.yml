@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  floriday:
+    build: .
+    container_name: floriday
+    networks:
+      - serra-vine
+    volumes:
+      - ./floridayvine-cronjob:/etc/cron.d/floridayvine-crontab:ro
+    environment:
+      - TZ=UTC
+    restart: on-failure
+
+networks:
+  serra-vine:
+    external: true
