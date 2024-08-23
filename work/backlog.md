@@ -7,9 +7,6 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-* Goal: make it deployable
-  * Refactor configuration variables and command line parameters
-
 ## Next
 
 ## Later
