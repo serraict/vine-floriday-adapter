@@ -1,3 +1,4 @@
+from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
 from .minio import upload_directory
@@ -25,11 +26,13 @@ def about():
 
 
 @app.command()
-def upload(path: str):
-    bucket = "floridayvine-testbucket"
-    target_dir = "quotations"
+def upload(
+    path: Annotated[str, typer.Argument()],
+    bucket: Annotated[str, typer.Argument(envvar="DEFAULT_BUCKET")] = "floriday",
+    target_dir: Annotated[str, typer.Argument(envvar="DEFAULT_DIR")] = "inbox",
+):
     upload_directory(bucket, target_dir, path)
-    print(f" {path} --> {bucket} ... upload complete")
+    print(f" {path} --> {bucket}/{target_dir} ... upload complete")
 
 
 def main():

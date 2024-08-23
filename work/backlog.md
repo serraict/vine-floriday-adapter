@@ -9,10 +9,11 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 Add the Docker image to Serra Vine.
 
-* [ ] The image works out-of-the-box so that we can test integration with our Serra Vine instance.
-  * [ ] url of minio server is configurable
-  * [ ] credentials are configurable form the Serra Vine Host
-  * [ ] location of source (test) data is configurable
+* [x] The image works out-of-the-box so that we can test integration with our Serra Vine instance.
+  * [x] url of minio server is configurable
+  * [x] credentials are configurable form the Serra Vine Host
+  * [x] location of source (test) data is configurable
+  * [ ] target location is configurable
 * [ ] Write a manual on how to include it in Serra Vine
 
 ## Next
