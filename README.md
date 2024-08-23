@@ -1,6 +1,6 @@
 # vine-floriday-adapter
 
-This adapter will make trade information from [Floriday] and available on a [Serra Vine] instance of choice.
+This adapter will make trade information from [Floriday] available on a [Serra Vine] instance of choice.
 
 See the [backlog] to learn what's next and planned.
 
@@ -21,8 +21,12 @@ floridayvine --help
 
 Now you can run and debug the command line script `floridayvine`.
 
-The application is published as a Docker container to <ghcr.io/serraict/vine-floriday-adapter>.
-A new container is pushed on each release tag.
+## Releasing
+
+To make a release, add a tag like `v0.9.1` and push it.
+This type of tag will trigger the [package workflow](./.github/workflows/package.yml).
+The application is published as a Docker container to <https://ghcr.io/serraict/vine-floriday-adapter>.
+
 
 ## Usage
 
