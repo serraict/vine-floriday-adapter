@@ -27,7 +27,6 @@ To make a release, add a tag like `v0.9.1` and push it.
 This type of tag will trigger the [package workflow](./.github/workflows/package.yml).
 The application is published as a Docker container to <https://ghcr.io/serraict/vine-floriday-adapter>.
 
-
 ## Usage
 
 ### As a Python script
