@@ -1,10 +1,16 @@
+from dataclasses import dataclass
 from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
-from .minio import upload_directory
+from .minio import MinioClient
 import os
 
 app = typer.Typer()
+
+
+@dataclass
+class Common:
+    minio: MinioClient
 
 
 def get_version():
@@ -17,22 +23,35 @@ def print_version():
 
 
 @app.command()
-def about():
+def about(ctx: typer.Context):
     print(
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
     print(f" v{get_version()}")
-    print(f" Minio endpoint: {os.getenv('MINIO_ENDPOINT', 'play.min.io')}")
+    print(f" Minio endpoint: {ctx.obj.minio.endpoint}")
 
 
 @app.command()
 def upload(
+    ctx: typer.Context,
     path: Annotated[str, typer.Argument()],
     bucket: Annotated[str, typer.Argument(envvar="DEFAULT_BUCKET")] = "floriday",
     target_dir: Annotated[str, typer.Argument(envvar="DEFAULT_DIR")] = "inbox",
 ):
-    upload_directory(bucket, target_dir, path)
+    """Upload a directory to Minio"""
+    clt = ctx.obj.minio
+    clt.upload_directory(bucket, target_dir, path)
     print(f" {path} --> {bucket}/{target_dir} ... upload complete")
+
+
+@app.callback()
+def common(
+    ctx: typer.Context,
+    minio_endpoint: Annotated[str, typer.Option(envvar="MINIO_ENDPOINT")],
+    minio_access_key: Annotated[str, typer.Option(envvar="MINIO_ACCESS_KEY")],
+    minio_secret_key: str = typer.Option(envvar="MINIO_SECRET_KEY"),
+):
+    ctx.obj = Common(MinioClient(minio_endpoint, minio_access_key, minio_secret_key))
 
 
 def main():
