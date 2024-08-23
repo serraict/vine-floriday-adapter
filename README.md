@@ -16,6 +16,7 @@ Checkout this repository. Then:
 make bootstrap
 . ./venv/bin/activate
 make update
+floridayvine --help
 ```
 
 Now you can run and debug the command line script `floridayvine`.
@@ -25,15 +26,18 @@ A new container is pushed on each release tag.
 
 ## Usage
 
-See the [tests](./tests) directory for example usages.
-Or run the following to see all options:
+### As a Python script
 
-```bash
-floridayvine --help
-```
+Follow the steps in Development.
+See the [tests](./tests) directory for example usages.
 
 Once the files are uploaded to Minio, you can create a virtual dataset in your data lake
 as described in this [Serra Learning on formatting a directory as a dataset].
+
+### As a Container in Serra Vine
+
+See [docker-compose.yml](./docker-compose.yml) for an example to configure the service in Serra Vine.
+Your environment variables can be configured in the compose file or in a separate env file.
 
 ---
 
