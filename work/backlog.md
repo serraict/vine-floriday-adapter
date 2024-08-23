@@ -7,6 +7,8 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
+Experiment: generate mock server from api definition.
+
 ## Next
 
 ## Later
