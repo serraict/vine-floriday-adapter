@@ -6,8 +6,10 @@ services:
     networks:
       - serra-vine
     volumes:
+      # mount your crontab file here:
       - ./floridayvine-crontab:/etc/cron.d/floridayvine-crontab:ro
     env_file:
+      # specify the path to your .env file with Minio and Floriday credentials and configuration
       - ./serra-vine.env
     environment:
       - TZ=UTC

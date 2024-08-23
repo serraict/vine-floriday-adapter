@@ -20,13 +20,16 @@ def about():
     print(
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
-    print(f"v{get_version()}")
-    print(f"Minio endpoint: {os.getenv('MINIO_ENDPOINT', 'play.min.io')}")
+    print(f" v{get_version()}")
+    print(f" Minio endpoint: {os.getenv('MINIO_ENDPOINT', 'play.min.io')}")
 
 
 @app.command()
 def upload(path: str):
-    upload_directory("floridayvine-testbucket", "quotations", path)
+    bucket = "floridayvine-testbucket"
+    target_dir = "quotations"
+    upload_directory(bucket, target_dir, path)
+    print(f" {path} --> {bucket} ... upload complete")
 
 
 def main():
