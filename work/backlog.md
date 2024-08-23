@@ -13,14 +13,13 @@ Add the Docker image to Serra Vine.
   * [x] url of minio server is configurable
   * [x] credentials are configurable form the Serra Vine Host
   * [x] location of source (test) data is configurable
-  * [ ] target location is configurable
-* [ ] Write a manual on how to include it in Serra Vine
+  * [x] target location is configurable
+* [x] Write a manual on how to include it in Serra Vine
+* [x] Have a cronjob of some kind that periodically runs the upload
 
 ## Next
 
 * Goal: make it deployable
-
-  * Have a cronjob of some kind that periodically runs the upload
   * Refactor configuration variables and command line parameters
 
 ## Later
