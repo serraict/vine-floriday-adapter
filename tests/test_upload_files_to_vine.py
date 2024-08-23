@@ -8,7 +8,7 @@ from minio import Minio
 # Since we do not specify a minio cli options in our tests,
 # floridayvine will fallback to the environment variables,
 # so we can use those for our assertions too.
-minio_endpoint = os.getenv("MINIO_ENDPOINT")
+minio_endpoint = os.getenv("MINIO_ENDPOINT", "play.min.io")
 minio_access_key = os.getenv("MINIO_ACCESS_KEY")
 minio_secret_key = os.getenv("MINIO_SECRET_KEY")
 minio_client = Minio(minio_endpoint, minio_access_key, minio_secret_key, secure=False)
