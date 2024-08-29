@@ -3,7 +3,8 @@ from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
 from .minio import MinioClient
-import os
+from .floriday import get_access_token
+
 
 app = typer.Typer()
 
@@ -42,6 +43,14 @@ def upload(
     clt = ctx.obj.minio
     clt.upload_directory(bucket, target_dir, path)
     print(f" {path} --> {bucket}/{target_dir} ... upload complete")
+
+
+@app.command()
+def verify_floriday_connection():
+    print("Connecting to Floriday...")
+    at = get_access_token()
+    print(f" access token: {at[:10]} ...")
+    print("Successfully connected to Floriday")
 
 
 @app.callback()

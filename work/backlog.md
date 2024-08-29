@@ -7,16 +7,22 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-Experiment: generate mock server from api definition.
+* Setup Floriday account
+  * [x] Subscribe and get client & secret for staging environment
+  * [x] Try connecting to the staging API
+  * [ ] Get an API KEY for staging <https://developer.floriday.io/docs/api-key>
+  * [ ] Test connection to staging api
+  * [ ] 
 
 ## Next
 
 ## Later
 
 * Goal: connect to Floriday.
-  * Setup Floriday account
+
   * Setup automatic tests against a staging environment (consider generating a mock server from the api)
   * Understand and implement a client for Floriday synchronization mechanism
+  * Experiment: generate mock server from api definition for local development
 * Goal: show open quotations for a supplier on Floriday.
   * retrieve "Supply Line" information
   * create a Serra Vine dashboard for open quotations
