@@ -3,7 +3,8 @@ from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
 from .minio import MinioClient
-from .floriday import get_access_token
+from .floriday import get_organizations
+from pprint import pprint
 
 
 app = typer.Typer()
@@ -46,11 +47,10 @@ def upload(
 
 
 @app.command()
-def verify_floriday_connection():
-    print("Connecting to Floriday...")
-    at = get_access_token()
-    print(f" access token: {at[:10]} ...")
-    print("Successfully connected to Floriday")
+def floriday_connection_info():
+    orgs = get_organizations()
+    print("Connected to Floriday:")
+    pprint(orgs)
 
 
 @app.callback()

@@ -10,9 +10,8 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 * Setup Floriday account
   * [x] Subscribe and get client & secret for staging environment
   * [x] Try connecting to the staging API
-  * [ ] Get an API KEY for staging <https://developer.floriday.io/docs/api-key>
-  * [ ] Test connection to staging api
-  * [ ] 
+  * [x] Get an API KEY for staging <https://developer.floriday.io/docs/api-key>
+  * [x] Test connection to staging api
 
 ## Next
 
