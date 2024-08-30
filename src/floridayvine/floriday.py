@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 import requests
 
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
@@ -44,6 +45,27 @@ def get_organizations():
 def get_trade_items():
     access_token = get_access_token()
     url = f"{BASE_URL}/trade-items"
+
+    headers = {
+        "X-Api-Key": API_KEY,
+        "Accept": "application/json",
+        "Authorization": f"Bearer {access_token}",
+    }
+    base_sync_number = 0
+    sync_items = sync_trade_items(base_sync_number)
+    max_sync_number = sync_items.get("maximumSequenceNumber")
+    results = sync_items.get("results")
+    print(f"{len(results)} trade items synced ({base_sync_number}..{max_sync_number})")
+    # pprint(items)
+
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+def sync_trade_items(base_sync_number=0):
+    access_token = get_access_token()
+    url = f"{BASE_URL}/trade-items/sync/{base_sync_number}"
 
     headers = {
         "X-Api-Key": API_KEY,

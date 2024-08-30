@@ -57,7 +57,7 @@ def floriday_connection_info():
 def print_trade_items():
     trade_items = get_trade_items()
     pprint(trade_items)
-
+    
 
 @app.callback()
 def common(
