@@ -29,6 +29,8 @@ The application is published as a Docker container to <https://ghcr.io/serraict/
 
 ## Usage
 
+For an example of the required environment variables, see [.env.example](.env.example).
+
 ### As a Python script
 
 Follow the steps in Development.
@@ -40,7 +42,7 @@ as described in this [Serra Learning on formatting a directory as a dataset].
 ### As a Container in Serra Vine
 
 See [docker-compose.yml](./docker-compose.yml) for an example to configure the service in Serra Vine.
-Your environment variables can be configured in the compose file or in a separate env file.
+Your environment variables can be configured in the compose file or in a separate .env file.
 
 ---
 
