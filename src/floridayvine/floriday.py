@@ -39,3 +39,18 @@ def get_organizations():
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
+
+
+def get_trade_items():
+    access_token = get_access_token()
+    url = f"{BASE_URL}/trade-items"
+
+    headers = {
+        "X-Api-Key": API_KEY,
+        "Accept": "application/json",
+        "Authorization": f"Bearer {access_token}",
+    }
+
+    response = requests.get(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
