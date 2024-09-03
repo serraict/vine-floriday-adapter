@@ -3,7 +3,7 @@ from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
 from .minio import MinioClient
-from .floriday import get_organizations, get_trade_items
+from .floriday.misc import get_organizations, get_trade_items
 from pprint import pprint
 
 
@@ -57,7 +57,7 @@ def floriday_connection_info():
 def print_trade_items():
     trade_items = get_trade_items()
     pprint(trade_items)
-    
+
 
 @app.callback()
 def common(
