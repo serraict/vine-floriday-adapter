@@ -2,6 +2,8 @@ import os
 from pprint import pprint
 import requests
 
+from floriday_supplier_client import TradeItemsApi, api_factory
+
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("FLORIDAY_CLIENT_SECRET")
 API_KEY = os.getenv("FLORIDAY_API_KEY")
@@ -27,6 +29,9 @@ def get_access_token():
     return response.json().get("access_token")
 
 
+_api_factory = api_factory.ApiFactory()
+
+
 def get_organizations():
     access_token = get_access_token()
     url = f"{BASE_URL}/auth/key"
@@ -43,24 +48,9 @@ def get_organizations():
 
 
 def get_trade_items():
-    access_token = get_access_token()
-    url = f"{BASE_URL}/trade-items"
-
-    headers = {
-        "X-Api-Key": API_KEY,
-        "Accept": "application/json",
-        "Authorization": f"Bearer {access_token}",
-    }
-    base_sync_number = 0
-    sync_items = sync_trade_items(base_sync_number)
-    max_sync_number = sync_items.get("maximumSequenceNumber")
-    results = sync_items.get("results")
-    print(f"{len(results)} trade items synced ({base_sync_number}..{max_sync_number})")
-    # pprint(items)
-
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
+    api = TradeItemsApi(_api_factory.get_api_client())
+    items = api.get_trade_items()
+    return items
 
 
 def sync_trade_items(base_sync_number=0):

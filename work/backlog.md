@@ -7,25 +7,25 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-* Retrieve trade-item information.
+* generate an api client
 
 ## Next
 
-* Goal: connect to Floriday.
-  * Understand and implement a client for Floriday synchronization mechanism
-    * implement it for trade items
-  * Experiment: generate mock server from api definition for local development
-
-## Later
-
 * Goal: have a decent developer experience
-  * generate an api
   * use the api to implement a generic sync implementation
   * learn about typer wrt exceptions and exit codes
   * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules
+  * Experiment: generate mock server from api definition for local development
+
+## Later
+
 * Goal: show open quotations for a supplier on Floriday.
   * retrieve "Supply Line" information
   * create a Serra Vine dashboard for open quotations
+* Goal: learn/ understand the FLoriday api
+  * Watch Floriday instruction videos and read som tutorials
+  * Understand and implement a client for Floriday synchronization mechanism
+    * implement it for trade items
 
 ## Out of Scope
