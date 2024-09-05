@@ -3,7 +3,13 @@ from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
 from .minio import MinioClient
-from .floriday.misc import get_organizations, get_trade_items, get_direct_sales
+from .floriday.misc import (
+    get_organizations,
+    get_trade_items,
+    get_direct_sales,
+)
+from .floriday import misc
+
 from pprint import pprint
 
 
@@ -63,6 +69,11 @@ def print_direct_sales():
 def print_trade_items():
     trade_items = get_trade_items()
     pprint(trade_items)
+
+
+@app.command()
+def sync_organizations():
+    misc.sync_organizations()
 
 
 @app.callback()

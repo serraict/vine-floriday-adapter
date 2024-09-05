@@ -1,8 +1,14 @@
 import os
 from pprint import pprint
 import requests
-
-from floriday_supplier_client import TradeItemsApi, api_factory, DirectSalesApi
+from ..persistence import persist
+from floriday_supplier_client import (
+    TradeItemsApi,
+    api_factory,
+    DirectSalesApi,
+    OrganizationsApi,
+)
+from floriday_supplier_client.models.organization import Organization
 
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("FLORIDAY_CLIENT_SECRET")
@@ -46,6 +52,15 @@ def get_organizations():
     response = requests.get(url, headers=headers)
     response.raise_for_status()
     return response.json()
+
+
+def sync_organizations():
+    print("Syncing organizations...")
+    api = OrganizationsApi(_clt)
+    orgs = api.get_organizations_by_sequence_number(sequence_number=0, limit_result=5)
+    for org in orgs.results:
+        print(f"Persisting {org.name} ...")
+        persist("organizations", org.organization_id, org.to_dict())
 
 
 def get_trade_items():

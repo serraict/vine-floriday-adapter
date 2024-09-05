@@ -7,12 +7,15 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-* retrieve "Supply Line" information
-
 ## Next
 
 * Goal: have a decent developer experience
   * use the api to implement a generic sync implementation
+    * sync organizations from seq nr = 0
+    * sync from a certain number N
+      * sync from 0 up until N
+      * sync from N
+    * Data can be stored locally in a csv file with columns `id, name, company_gln, organization_type, sequence_number` and other columns if needed
   * learn about typer wrt exceptions and exit codes
   * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules
@@ -21,6 +24,13 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 ## Later
 
 * Goal: show open quotations for a supplier on Floriday.
+  * Sync organizations to local database
+    * For now: create a csv that we place in Mino and read with dremio
+    * Sync from base
+    * Sync from a specific sequence number
+  * Sync trade items to local database
+  * Sync batches (optional)
+  * Sync direct sales
   * create a Serra Vine dashboard for open quotations
 * Goal: learn/ understand the FLoriday api
   * Watch Floriday instruction videos and read som tutorials
