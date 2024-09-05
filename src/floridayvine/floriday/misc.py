@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 import requests
 
-from floriday_supplier_client import TradeItemsApi, api_factory
+from floriday_supplier_client import TradeItemsApi, api_factory, DirectSalesApi
 
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("FLORIDAY_CLIENT_SECRET")
@@ -30,6 +30,7 @@ def get_access_token():
 
 
 _api_factory = api_factory.ApiFactory()
+_clt = _api_factory.get_api_client()
 
 
 def get_organizations():
@@ -48,8 +49,14 @@ def get_organizations():
 
 
 def get_trade_items():
-    api = TradeItemsApi(_api_factory.get_api_client())
+    api = TradeItemsApi(_clt)
     items = api.get_trade_items()
+    return items
+
+
+def get_direct_sales():
+    api = DirectSalesApi(_clt)
+    items = api.get_supply_lines()
     return items
 
 

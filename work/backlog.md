@@ -7,7 +7,7 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
-* generate an api client
+* retrieve "Supply Line" information
 
 ## Next
 
@@ -21,7 +21,6 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 ## Later
 
 * Goal: show open quotations for a supplier on Floriday.
-  * retrieve "Supply Line" information
   * create a Serra Vine dashboard for open quotations
 * Goal: learn/ understand the FLoriday api
   * Watch Floriday instruction videos and read som tutorials
