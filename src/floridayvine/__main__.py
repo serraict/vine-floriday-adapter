@@ -72,8 +72,8 @@ def print_trade_items():
 
 
 @app.command()
-def sync_organizations():
-    misc.sync_organizations()
+def sync_organizations(start_seq_number: int = 0, limit_result: int = 5):
+    misc.sync_organizations(start_seq_number, limit_result)
 
 
 @app.callback()

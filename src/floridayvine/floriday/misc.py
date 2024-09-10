@@ -1,5 +1,6 @@
 import os
 from pprint import pprint
+import time
 import requests
 from ..persistence import persist
 from floriday_supplier_client import (
@@ -54,13 +55,22 @@ def get_organizations():
     return response.json()
 
 
-def sync_organizations():
-    print("Syncing organizations...")
+def sync_organizations(start_seq_number=0, limit_result=5):
     api = OrganizationsApi(_clt)
-    orgs = api.get_organizations_by_sequence_number(sequence_number=0, limit_result=5)
-    for org in orgs.results:
-        print(f"Persisting {org.name} ...")
-        persist("organizations", org.organization_id, org.to_dict())
+    my_sequence = start_seq_number
+    max_seq_nr = api.get_organizations_max_sequence()
+
+    print(f"Syncing organizations from {my_sequence} to {max_seq_nr} ...")
+
+    while my_sequence < max_seq_nr:
+        orgs_sync_result = api.get_organizations_by_sequence_number(
+            sequence_number=my_sequence, limit_result=limit_result
+        )
+        for org in orgs_sync_result.results:
+            print(f"Seq nr {org.sequence_number}: Persisting {org.name} ...")
+            persist("organizations", org.organization_id, org.to_dict())
+        my_sequence = orgs_sync_result.maximum_sequence_number
+        time.sleep(0.5)
 
 
 def get_trade_items():
