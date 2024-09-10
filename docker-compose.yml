@@ -1,5 +1,7 @@
 version: '3.8'
+
 services:
+
   floriday:
     build: .
     container_name: floriday
@@ -14,7 +16,46 @@ services:
     environment:
       - TZ=UTC
     restart: on-failure
+  
+  # mongodb:
+  #   image: mongo:4.4
+  #   container_name: mongodb
+  #   build: 
+  #     context: ./mongo
+  #   ports:
+  #     - 27017:27017
+  #   networks:
+  #     serra-vine:
+  #       aliases:
+  #         - mongodb
+  #         - api.mongodb
+  #   volumes:
+  #     - mongodb-data:/data/db
+  #   env_file:
+  #     - .env
+
+  # mongo-express:
+  #   image: mongo-express:latest
+  #   container_name: mongo-express
+  #   ports:
+  #     - 8081:8081
+  #   build: 
+  #     context: ./mongo
+  #   depends_on:
+  #     - mongodb
+  #   networks:
+  #     serra-vine:
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongodb
+  #     ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+  #     ME_CONFIG_OPTIONS_EDITORTHEME: default
 
 networks:
   serra-vine:
     external: true
+
+volumes:
+  mongodb-data:
+    driver: local
