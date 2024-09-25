@@ -105,6 +105,6 @@ def sync_trade_items(start_seq_number=0, limit_result=5):
             )
             persist("trade_items", item.trade_item_id, item.to_dict())
         my_sequence = trade_items_sync_result.maximum_sequence_number
-        print(f"Next sequence number: {my_sequence}")
         time.sleep(0.5)
+
     print("Done syncing trade items")

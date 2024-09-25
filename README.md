@@ -31,6 +31,33 @@ The application is published as a Docker container to <https://ghcr.io/serraict/
 
 For an example of the required environment variables, see [.env.example](.env.example).
 
+When setup, then:
+
+```bash
+(venv) ➜  vine-floriday-adapter git:(main) floridayvine init-db                                                        
+Initializing database on mongodb://root:'*****'@localhost:27017...
+Created collection: organizations
+Created collection: trade_items
+(venv) ➜  vine-floriday-adapter git:(main) floridayvine print-sync-status                                          
+Max sequence number for organizations: 0
+Max sequence number for trade_items: 0
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync-organizations  --limit-result 3   
+Syncing organizations from 0 to 1164016 ...
+Seq nr 864747: Persisting Douwe Hoving | Potplanten ...
+Seq nr 864921: Persisting Planten Centrum Twente ...
+Seq nr 867216: Persisting VOF van Kester-Duijvesteijn ...
+Done syncing organizations
+^C
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine print-sync-status                   
+Max sequence number for organizations: 867216
+Max sequence number for trade_items: 0
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync-organizations --start-seq-number 867216 --limit-result 100
+[...]
+Seq nr 933052: Persisting  ...
+Seq nr 933053: Persisting Razek Saliman ...
+Done syncing organizations
+```
+
 ### As a Python script
 
 Follow the steps in Development.

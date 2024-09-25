@@ -55,10 +55,6 @@ def print_sync_status():
 
 
 def persist(collection: str, _id: str, data: dict):
-    """
-    Persist data to the database.
-    """
-    print(f"Persisting data to {collection} on {mongodb_connection_string}...")
     with MongoClient(mongodb_connection_string) as client:
         db = client[DATABASE]
         coll = db[collection]
