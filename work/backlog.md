@@ -16,7 +16,7 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
       * sync from 0 up until N
       * sync from N
     * Data can be stored locally
-    * Mongo DB as part of this compose file makes more sense. Use serra-vine network
+    * Mongo DB as part of this compose file makes more sense. Use serra-vine network.
   * learn about typer wrt exceptions and exit codes
   * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules

@@ -43,3 +43,9 @@ docker_push: docker_image
 	docker push ghcr.io/serraict/vine-floriday-adapter:$(VERSION)
 docker_compose_debug:
 	docker compose up --build
+mongodb:
+	docker compose -f mongodb-docker-compose.yml up
+mongodb_bg:
+	docker compose -f mongodb-docker-compose.yml up -d
+stop_mongodb:
+	docker compose -f mongodb-docker-compose.yml down

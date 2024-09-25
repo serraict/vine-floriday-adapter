@@ -4,6 +4,7 @@
         "floriday",
         "floridayvine",
         "minio",
+        "pymongo",
         "pytestmark"
     ]
 }
