@@ -2,6 +2,10 @@ from dataclasses import dataclass
 from typing_extensions import Annotated
 import typer
 from importlib.metadata import version
+from .persistence import (
+    initialize_database,
+    print_sync_status as persistence_print_sync_status,
+)
 from .minio import MinioClient
 from .floriday.misc import (
     get_organizations,
@@ -74,6 +78,21 @@ def print_trade_items():
 @app.command()
 def sync_organizations(start_seq_number: int = 0, limit_result: int = 5):
     misc.sync_organizations(start_seq_number, limit_result)
+
+
+@app.command()
+def sync_trade_items(start_seq_number: int = 0, limit_result: int = 5):
+    misc.sync_trade_items(start_seq_number, limit_result)
+
+
+@app.command()
+def print_sync_status():
+    persistence_print_sync_status()
+
+
+@app.command()
+def init_db():
+    initialize_database()
 
 
 @app.callback()

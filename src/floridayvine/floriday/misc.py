@@ -66,11 +66,13 @@ def sync_organizations(start_seq_number=0, limit_result=5):
         orgs_sync_result = api.get_organizations_by_sequence_number(
             sequence_number=my_sequence, limit_result=limit_result
         )
+        max_seq_nr = orgs_sync_result.maximum_sequence_number
         for org in orgs_sync_result.results:
             print(f"Seq nr {org.sequence_number}: Persisting {org.name} ...")
             persist("organizations", org.organization_id, org.to_dict())
         my_sequence = orgs_sync_result.maximum_sequence_number
         time.sleep(0.5)
+    print("Done syncing organizations")
 
 
 def get_trade_items():
@@ -85,16 +87,24 @@ def get_direct_sales():
     return items
 
 
-def sync_trade_items(base_sync_number=0):
-    access_token = get_access_token()
-    url = f"{BASE_URL}/trade-items/sync/{base_sync_number}"
+def sync_trade_items(start_seq_number=0, limit_result=5):
+    api = TradeItemsApi(_clt)
+    my_sequence = start_seq_number
+    max_seq_nr = api.get_trade_items_max_sequence()
 
-    headers = {
-        "X-Api-Key": API_KEY,
-        "Accept": "application/json",
-        "Authorization": f"Bearer {access_token}",
-    }
+    print(f"Syncing trade items from {my_sequence} to {max_seq_nr} ...")
 
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
+    while my_sequence < max_seq_nr:
+        trade_items_sync_result = api.get_trade_items_by_sequence_number(
+            sequence_number=my_sequence, limit_result=limit_result
+        )
+        max_seq_nr = trade_items_sync_result.maximum_sequence_number
+        for item in trade_items_sync_result.results:
+            print(
+                f"Seq nr {item.sequence_number}: Persisting {item.trade_item_name} ..."
+            )
+            persist("trade_items", item.trade_item_id, item.to_dict())
+        my_sequence = trade_items_sync_result.maximum_sequence_number
+        print(f"Next sequence number: {my_sequence}")
+        time.sleep(0.5)
+    print("Done syncing trade items")

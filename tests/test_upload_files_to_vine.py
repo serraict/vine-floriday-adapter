@@ -39,7 +39,7 @@ def teardown_integration():
 
 def test_can_run_script():
     source_dir = "tests/data/"
-    cp = subprocess.run(["floridayvine", "upload", source_dir])
+    cp = subprocess.run(["floridayvine", "upload", source_dir, bucket])
     assert cp.returncode == 0
 
     file_count = count_files(source_dir)

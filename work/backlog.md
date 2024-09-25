@@ -10,13 +10,6 @@ Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
 ## Next
 
 * Goal: have a decent developer experience
-  * use the api to implement a generic sync implementation
-    * sync organizations from seq nr = 0
-    * sync from a certain number N
-      * sync from 0 up until N
-      * sync from N
-    * Data can be stored locally
-    * Mongo DB as part of this compose file makes more sense. Use serra-vine network.
   * learn about typer wrt exceptions and exit codes
   * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules
