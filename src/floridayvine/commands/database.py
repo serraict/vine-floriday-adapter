@@ -6,10 +6,12 @@ from ..persistence import (
 
 app = typer.Typer()
 
+
 @app.command()
 def print_sync_status():
     persistence_print_sync_status()
 
+
 @app.command()
-def init_db():
+def init():
     initialize_database()
