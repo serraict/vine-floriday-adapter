@@ -2,7 +2,7 @@ import os
 from pprint import pprint
 import time
 import requests
-from ..persistence import persist
+from ..persistence import persist, get_max_sequence_number
 from floriday_supplier_client import (
     TradeItemsApi,
     api_factory,
@@ -30,7 +30,7 @@ headers = {
 }
 
 
-def _get_access_token():
+def get_access_token():
     response = requests.request("POST", AUTH_URL, headers=headers, data=payload)
     response.raise_for_status()
     return response.json().get("access_token")
@@ -41,7 +41,7 @@ _clt = _api_factory.get_api_client()
 
 
 def get_organizations():
-    access_token = _get_access_token()
+    access_token = get_access_token()
     url = f"{BASE_URL}/auth/key"
 
     headers = {
@@ -61,9 +61,12 @@ def sync_entities(
     get_max_sequence,
     get_by_sequence,
     persist_entity,
-    start_seq_number=0,
+    start_seq_number=None,
     limit_result=5,
 ):
+    if start_seq_number is None:
+        start_seq_number = get_max_sequence_number(entity_type)
+
     my_sequence = start_seq_number
     max_seq_nr = get_max_sequence()
 
@@ -77,12 +80,12 @@ def sync_entities(
         for entity in sync_result.results:
             print(f"Seq nr {entity.sequence_number}: Persisting {persist_entity(entity)} ...")
         my_sequence = sync_result.maximum_sequence_number
-        time.sleep(0.1)
+        time.sleep(0.5)
 
     print(f"Done syncing {entity_type}")
 
 
-def sync_organizations(start_seq_number=0, limit_result=50):
+def sync_organizations(start_seq_number=None, limit_result=5):
     api = OrganizationsApi(_clt)
     
     def persist_org(org):
@@ -112,7 +115,7 @@ def get_direct_sales():
     return items
 
 
-def sync_trade_items(start_seq_number=0, limit_result=50):
+def sync_trade_items(start_seq_number=None, limit_result=5):
     api = TradeItemsApi(_clt)
     
     def persist_item(item):
