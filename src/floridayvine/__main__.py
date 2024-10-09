@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import typer
 from .minio import MinioClient
-from .commands import version, minio, floriday, database
+from .commands import version, minio, floriday, database, sync
 
 app = typer.Typer()
 
@@ -16,6 +16,7 @@ def register_commands():
     app.add_typer(minio.app, name="minio")
     app.add_typer(floriday.app, name="floriday")
     app.add_typer(database.app, name="db")
+    app.add_typer(sync.app, name="sync")
 
 
 @app.callback()

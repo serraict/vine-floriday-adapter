@@ -4,9 +4,8 @@ from ..floriday.misc import (
     get_organizations,
     get_trade_items,
     get_direct_sales,
-    sync_organizations,
-    sync_trade_items,
 )
+from . import sync
 
 app = typer.Typer()
 
@@ -26,10 +25,4 @@ def print_trade_items():
     trade_items = get_trade_items()
     pprint(trade_items)
 
-@app.command()
-def sync_organizations_command(start_seq_number: int = 0, limit_result: int = 5):
-    sync_organizations(start_seq_number, limit_result)
-
-@app.command()
-def sync_trade_items_command(start_seq_number: int = 0, limit_result: int = 5):
-    sync_trade_items(start_seq_number, limit_result)
+app.add_typer(sync.app, name="sync")
