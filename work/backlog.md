@@ -10,7 +10,6 @@ Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
 ## Next
 
 * Goal: have a decent developer experience
-  * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules
 
 ## Later
