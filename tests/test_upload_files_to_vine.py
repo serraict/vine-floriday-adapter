@@ -17,12 +17,11 @@ minio_client = Minio(minio_endpoint, minio_access_key, minio_secret_key, secure=
 pytestmark = pytest.mark.integration
 
 bucket = "floridayvine-testbucket"
-
+target_dir = "inbox"
 
 @pytest.fixture(scope="module", autouse=True)
 def setup():
     assert minio_client.bucket_exists(bucket) == True
-
 
 @pytest.fixture(autouse=True)
 def teardown_integration():
@@ -36,10 +35,9 @@ def teardown_integration():
         count_blobs() == 0
     ), f"Bucket '{bucket}' should be empty after each test, but it is not."
 
-
-def test_can_run_script():
+def test_can_run_script_with_custom_bucket_and_target():
     source_dir = "tests/data/"
-    cp = subprocess.run(["floridayvine", "upload", source_dir, bucket])
+    cp = subprocess.run(["floridayvine", "minio", "upload", source_dir, bucket, target_dir])
     assert cp.returncode == 0
 
     file_count = count_files(source_dir)
@@ -47,11 +45,9 @@ def test_can_run_script():
 
     assert blob_count == file_count
 
-
 def count_blobs(in_bucket=bucket):
     blob_count = len(list(minio_client.list_objects(in_bucket, recursive=True)))
     return blob_count
-
 
 def count_files(source_dir):
     file_paths = glob.glob(f"{source_dir}/**", recursive=True)
