@@ -3,17 +3,15 @@
 ## Done
 
 Repository is setup at <https://github.com/serraict/vine-floriday-adapter>.
-Containers are pushed to <ghcr.io/serraict/vine-floriday-adapter>.
+Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
 ## Next
 
 * Goal: have a decent developer experience
-  * learn about typer wrt exceptions and exit codes
   * document versioning strategy: what will we do when the api updates
   * organize typer commands into submodules
-  * Experiment: generate mock server from api definition for local development
 
 ## Later
 
