@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 import time
 import requests
 from ..persistence import persist, get_max_sequence_number
@@ -9,7 +8,6 @@ from floriday_supplier_client import (
     DirectSalesApi,
     OrganizationsApi,
 )
-from floriday_supplier_client.models.organization import Organization
 
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("FLORIDAY_CLIENT_SECRET")
@@ -78,7 +76,9 @@ def sync_entities(
         )
         max_seq_nr = sync_result.maximum_sequence_number
         for entity in sync_result.results:
-            print(f"Seq nr {entity.sequence_number}: Persisting {persist_entity(entity)} ...")
+            print(
+                f"Seq nr {entity.sequence_number}: Persisting {persist_entity(entity)} ..."
+            )
         my_sequence = sync_result.maximum_sequence_number
         time.sleep(0.5)
 
@@ -87,7 +87,7 @@ def sync_entities(
 
 def sync_organizations(start_seq_number=None, limit_result=5):
     api = OrganizationsApi(_clt)
-    
+
     def persist_org(org):
         persist("organizations", org.organization_id, org.to_dict())
         return org.name
@@ -117,7 +117,7 @@ def get_direct_sales():
 
 def sync_trade_items(start_seq_number=None, limit_result=5):
     api = TradeItemsApi(_clt)
-    
+
     def persist_item(item):
         persist("trade_items", item.trade_item_id, item.to_dict())
         return item.trade_item_name

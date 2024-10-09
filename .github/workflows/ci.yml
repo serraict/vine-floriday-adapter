@@ -26,9 +26,9 @@ jobs:
     - name: Install dependencies
       run: |
         make update
-    - name: Test with pytest
+    - name: Run quality checks
       run: |
-        make test
+        make quality
     - name: Package
       run: |
         make docker_image

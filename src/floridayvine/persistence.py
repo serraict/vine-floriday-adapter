@@ -1,9 +1,8 @@
 import os
 from pymongo import MongoClient
+import re
 
 mongodb_connection_string = os.getenv("MONGODB_CONNECTION_STRING")
-
-import re
 
 # Regular expression pattern to match and mask the password
 pattern = r"(mongodb://[^:]+:)([^@]+)(@.+)"

@@ -3,6 +3,7 @@ import typer
 
 app = typer.Typer()
 
+
 @app.command()
 def upload(
     ctx: typer.Context,

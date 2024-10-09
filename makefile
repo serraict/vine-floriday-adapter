@@ -49,3 +49,12 @@ mongodb_bg:
 	docker compose -f mongodb-docker-compose.yml up -d
 stop_mongodb:
 	docker compose -f mongodb-docker-compose.yml down
+
+quality:
+	@echo "Running code quality checks..."
+	flake8 src tests
+	black --check src tests
+	pre-commit run --all-files
+	@echo "Running tests..."
+	pytest -m "not integration"
+	@echo "Code quality checks completed."

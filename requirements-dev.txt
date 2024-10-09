@@ -2,3 +2,6 @@ toml
 GitPython
 setuptools_scm>=8
 pytest
+pre-commit
+black
+flake8
