@@ -20,9 +20,10 @@ test-integration:
 build:
 	python -m build
 documentation:
+	python scripts/generate_cli_docs.py
 printversion:
 	@python -m setuptools_scm
-release:
+release: documentation
 	@if [ -n "$$(git status --porcelain)" ]; then \
 		echo "There are uncommitted changes or untracked files"; \
 		exit 1; \
@@ -35,8 +36,10 @@ release:
 		echo "Local branch is ahead of origin"; \
 		exit 1; \
 	fi
+	@git add docs/cli_documentation.md
+	@git commit -m "Update CLI documentation for release"
 	@git tag v$$(python -m setuptools_scm --strip-dev)
-	@git push origin --tags
+	@git push origin main --tags
 docker_image:
 	docker build -t ghcr.io/serraict/vine-floriday-adapter:$(VERSION) .
 docker_push: docker_image
