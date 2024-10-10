@@ -36,8 +36,12 @@ release: documentation
 		echo "Local branch is ahead of origin"; \
 		exit 1; \
 	fi
-	@git tag v$$(python -m setuptools_scm --strip-dev)
-	@git push origin main --tags
+	@NEW_VERSION=$$(python -m setuptools_scm --strip-dev) && \
+	sed -i '' "s/\[Unreleased\]/[$${NEW_VERSION}] - $$(date +%Y-%m-%d)/" CHANGELOG.md && \
+	git add CHANGELOG.md && \
+	git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}" && \
+	git tag v$${NEW_VERSION} && \
+	git push origin main --tags
 docker_image:
 	docker build -t ghcr.io/serraict/vine-floriday-adapter:$(VERSION) .
 docker_push: docker_image
