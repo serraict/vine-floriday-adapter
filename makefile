@@ -36,8 +36,6 @@ release: documentation
 		echo "Local branch is ahead of origin"; \
 		exit 1; \
 	fi
-	@git add docs/cli_documentation.md
-	@git commit -m "Update CLI documentation for release"
 	@git tag v$$(python -m setuptools_scm --strip-dev)
 	@git push origin main --tags
 docker_image:
