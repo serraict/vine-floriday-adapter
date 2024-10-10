@@ -1,97 +1,107 @@
 # Floridayvine CLI Documentation
 
-This document provides an overview of the Floridayvine CLI application and its commands.
+## Main Command
 
-## Usage
-
-```
-floridayvine [OPTIONS] COMMAND [ARGS]...
-```
-
-## Global Options
-
-- `--help`: Show this message and exit.
-
-## Commands
-
-### `sync`
-
-#### Usage
-
-```
-floridayvine sync [OPTIONS] [ARGS]...
-```
-
-#### Options
-
-This command has no options.
-
-*This command has no subcommands.*
-
-For more detailed information, use `floridayvine sync --help`.
-
-### `version`
-
-#### Usage
+```shell
+                                                                                                                                                        
+ Usage: floridayvine [OPTIONS] COMMAND [ARGS]...                                                                                                        
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ *  --minio-endpoint            TEXT  [env var: MINIO_ENDPOINT] [default: None] [required]                                                            │
+│ *  --minio-access-key          TEXT  [env var: MINIO_ACCESS_KEY] [default: None] [required]                                                          │
+│ *  --minio-secret-key          TEXT  [env var: MINIO_SECRET_KEY] [default: None] [required]                                                          │
+│    --install-completion              Install completion for the current shell.                                                                       │
+│    --show-completion                 Show completion for the current shell, to copy it or customize the installation.                                │
+│    --help                            Show this message and exit.                                                                                     │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ db                                                                                                                                                   │
+│ floriday                                                                                                                                             │
+│ minio                                                                                                                                                │
+│ sync                                                                                                                                                 │
+│ version                                                                                                                                              │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 ```
-floridayvine version [OPTIONS] [ARGS]...
-```
 
-#### Options
-
-This command has no options.
-
-*This command has no subcommands.*
-
-For more detailed information, use `floridayvine version --help`.
-
-### `database`
-
-#### Usage
+## `db` Command
 
 ```
-floridayvine database [OPTIONS] [ARGS]...
-```
-
-#### Options
-
-This command has no options.
-
-*This command has no subcommands.*
-
-For more detailed information, use `floridayvine database --help`.
-
-### `floriday`
-
-#### Usage
+                                                                                                                                                        
+ Usage: floridayvine db [OPTIONS] COMMAND [ARGS]...                                                                                                     
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ init                                                                                                                                                 │
+│ print-sync-status                                                                                                                                    │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 ```
-floridayvine floriday [OPTIONS] [ARGS]...
-```
 
-#### Options
-
-This command has no options.
-
-*This command has no subcommands.*
-
-For more detailed information, use `floridayvine floriday --help`.
-
-### `minio`
-
-#### Usage
+## `floriday` Command
 
 ```
-floridayvine minio [OPTIONS] [ARGS]...
+                                                                                                                                                        
+ Usage: floridayvine floriday [OPTIONS] COMMAND [ARGS]...                                                                                               
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ floriday-connection-info                                                                                                                             │
+│ print-direct-sales                                                                                                                                   │
+│ print-trade-items                                                                                                                                    │
+│ sync                                                                                                                                                 │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
 ```
 
-#### Options
+## `minio` Command
 
-This command has no options.
+```
+                                                                                                                                                        
+ Usage: floridayvine minio [OPTIONS] COMMAND [ARGS]...                                                                                                  
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ upload   Upload a directory to Minio                                                                                                                 │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
-*This command has no subcommands.*
+```
 
-For more detailed information, use `floridayvine minio --help`.
+## `sync` Command
 
-Note: This documentation is automatically generated. Some commands may have additional options or subcommands not captured here. Always use the `--help` option with any command for the most up-to-date and detailed information.
+```
+                                                                                                                                                        
+ Usage: floridayvine sync [OPTIONS] COMMAND [ARGS]...                                                                                                   
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ organizations   Synchronize organizations data from Floriday.                                                                                        │
+│ trade-items     Synchronize trade items data from Floriday.                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+```
+
+## `version` Command
+
+```
+                                                                                                                                                        
+ Usage: floridayvine version [OPTIONS] COMMAND [ARGS]...                                                                                                
+                                                                                                                                                        
+╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help          Show this message and exit.                                                                                                          │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ about                                                                                                                                                │
+│ print-version                                                                                                                                        │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+```
+

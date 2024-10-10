@@ -1,136 +1,61 @@
-import importlib
-import inspect
+import subprocess
 import os
-import typer
-from typing import Dict, Any, Union
 
 
-def import_commands():
-    commands = {}
-    commands_dir = os.path.join("src", "floridayvine", "commands")
-    for filename in os.listdir(commands_dir):
-        if filename.endswith(".py") and not filename.startswith("__"):
-            module_name = f"floridayvine.commands.{filename[:-3]}"
-            module = importlib.import_module(module_name)
-            for name, obj in inspect.getmembers(module):
-                if isinstance(obj, typer.Typer):
-                    commands[filename[:-3]] = obj
-    return commands
+def run_command(command):
+    try:
+        env = os.environ.copy()
+        env["MINIO_ENDPOINT"] = "dummy_endpoint"
+        env["MINIO_ACCESS_KEY"] = "dummy_access_key"
+        env["MINIO_SECRET_KEY"] = "dummy_secret_key"
+        result = subprocess.run(
+            command, capture_output=True, text=True, check=True, env=env
+        )
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        print(f"Error running command {' '.join(command)}: {e}")
+        print(f"Stderr: {e.stderr}")
+        print(f"Stdout: {e.stdout}")
+        return f"Error: Unable to retrieve help for this command.\nStderr: {e.stderr}\nStdout: {e.stdout}"
 
 
-def get_command_help(command: Union[typer.Typer, typer.models.CommandInfo]) -> str:
-    if isinstance(command, typer.Typer):
-        return command.info.help if command.info and command.info.help else ""
-    elif isinstance(command, typer.models.CommandInfo):
-        return command.help if command.help else ""
-    return ""
+def generate_documentation():
+    # Get the main help output
+    main_help = run_command(["floridayvine", "--help"])
+    # Parse the main help to get the list of commands
+    commands = []
+    commands_section = False
+    for line in main_help.split("\n"):
+        if "Commands" in line and "─" in line:
+            commands_section = True
+            continue
+        if commands_section and "│" in line:
+            command = line.split("│")[1].strip().split()[0]
+            if command:
+                commands.append(command)
+        if commands_section and "╰" in line:
+            break
 
+    print(f"Found commands: {commands}")
 
-def get_subcommands(command: Union[typer.Typer, typer.models.CommandInfo]) -> list:
-    if isinstance(command, typer.Typer):
-        return [
-            cmd
-            for cmd in command.registered_commands
-            if cmd.name and cmd.name != "None" and not cmd.name.startswith("_")
-        ]
-    return []
+    # Generate the documentation
+    doc = "# Floridayvine CLI Documentation\n\n"
+    doc += "## Main Command\n\n"
+    doc += "```shell\n" + main_help + "```\n\n"
 
+    # Generate documentation for each command
+    for command in commands:
+        doc += f"## `{command}` Command\n\n"
+        command_help = run_command(["floridayvine", command, "--help"])
+        doc += "```\n" + command_help + "```\n\n"
 
-def document_command(
-    command: Union[typer.Typer, typer.models.CommandInfo], name: str, indent: str = ""
-) -> str:
-    md_content = f"{indent}### `{name}`\n\n"
-
-    help_text = get_command_help(command)
-    if help_text:
-        md_content += f"{indent}{help_text}\n\n"
-
-    md_content += f"{indent}#### Usage\n\n"
-    md_content += f"{indent}```\n"
-    md_content += f"{indent}floridayvine {name} [OPTIONS] [ARGS]...\n"
-    md_content += f"{indent}```\n\n"
-
-    # Document options
-    if isinstance(command, typer.Typer) and command.registered_callback:
-        md_content += document_options(command.registered_callback, indent)
-    elif isinstance(command, typer.models.CommandInfo):
-        md_content += document_options(command, indent)
-    else:
-        md_content += f"{indent}#### Options\n\n"
-        md_content += f"{indent}This command has no options.\n\n"
-
-    subcommands = get_subcommands(command)
-    if subcommands:
-        md_content += f"{indent}#### Subcommands\n\n"
-        for subcommand in subcommands:
-            subcommand_help = get_command_help(subcommand)
-            md_content += f"{indent}- `{subcommand.name}`"
-            if subcommand_help:
-                md_content += f": {subcommand_help}"
-            md_content += "\n"
-        md_content += "\n"
-
-        for subcommand in subcommands:
-            md_content += document_command(
-                subcommand, f"{name} {subcommand.name}", indent + "  "
-            )
-    else:
-        md_content += f"{indent}*This command has no subcommands.*\n\n"
-
-    md_content += (
-        f"{indent}For more detailed information, use `floridayvine {name} --help`.\n\n"
-    )
-
-    return md_content
-
-
-def document_options(callback: Any, indent: str = "") -> str:
-    md_content = f"{indent}#### Options\n\n"
-    params = callback.params if hasattr(callback, "params") else []
-    if not params:
-        md_content += f"{indent}This command has no options.\n\n"
-        return md_content
-    for param in params:
-        option_str = f"{indent}- `"
-        if param.opts:
-            option_str += ", ".join(param.opts)
-        option_str += "`"
-        if param.help:
-            option_str += f": {param.help}"
-        if param.default is not None and not callable(param.default):
-            option_str += f" (default: {param.default})"
-        md_content += f"{option_str}\n"
-    md_content += "\n"
-    return md_content
-
-
-def generate_markdown(commands: Dict[str, typer.Typer]) -> str:
-    md_content = "# Floridayvine CLI Documentation\n\n"
-    md_content += "This document provides an overview of the Floridayvine CLI application and its commands.\n\n"
-
-    md_content += "## Usage\n\n"
-    md_content += "```\n"
-    md_content += "floridayvine [OPTIONS] COMMAND [ARGS]...\n"
-    md_content += "```\n\n"
-
-    md_content += "## Global Options\n\n"
-    md_content += "- `--help`: Show this message and exit.\n\n"
-
-    md_content += "## Commands\n\n"
-
-    for command_name, command in commands.items():
-        md_content += document_command(command, command_name)
-
-    md_content += "Note: This documentation is automatically generated. Some commands may have additional options or subcommands not captured here. Always use the `--help` option with any command for the most up-to-date and detailed information.\n"
-
-    return md_content
+    return doc
 
 
 def main():
-    commands = import_commands()
-    md_content = generate_markdown(commands)
+    documentation = generate_documentation()
     with open("docs/cli_documentation.md", "w") as f:
-        f.write(md_content)
+        f.write(documentation)
     print("CLI documentation has been generated and saved to docs/cli_documentation.md")
 
 
