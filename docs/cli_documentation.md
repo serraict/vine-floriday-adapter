@@ -7,17 +7,13 @@
  Usage: floridayvine [OPTIONS] COMMAND [ARGS]...                                                                                                        
                                                                                                                                                         
 ╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ *  --minio-endpoint            TEXT  [env var: MINIO_ENDPOINT] [default: None] [required]                                                            │
-│ *  --minio-access-key          TEXT  [env var: MINIO_ACCESS_KEY] [default: None] [required]                                                          │
-│ *  --minio-secret-key          TEXT  [env var: MINIO_SECRET_KEY] [default: None] [required]                                                          │
-│    --install-completion              Install completion for the current shell.                                                                       │
-│    --show-completion                 Show completion for the current shell, to copy it or customize the installation.                                │
-│    --help                            Show this message and exit.                                                                                     │
+│ --install-completion          Install completion for the current shell.                                                                              │
+│ --show-completion             Show completion for the current shell, to copy it or customize the installation.                                       │
+│ --help                        Show this message and exit.                                                                                            │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ db                                                                                                                                                   │
 │ floriday                                                                                                                                             │
-│ minio                                                                                                                                                │
 │ sync                                                                                                                                                 │
 │ version                                                                                                                                              │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
@@ -54,21 +50,6 @@
 │ print-direct-sales                                                                                                                                   │
 │ print-trade-items                                                                                                                                    │
 │ sync                                                                                                                                                 │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-
-```
-
-## `minio` Command
-
-```
-                                                                                                                                                        
- Usage: floridayvine minio [OPTIONS] COMMAND [ARGS]...                                                                                                  
-                                                                                                                                                        
-╭─ Options ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --help          Show this message and exit.                                                                                                          │
-╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
-╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ upload   Upload a directory to Minio                                                                                                                 │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
 ```
