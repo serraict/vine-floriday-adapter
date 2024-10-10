@@ -19,4 +19,3 @@ def about(ctx: typer.Context):
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
     print(f" v{get_version()}")
-    print(f" Minio endpoint: {ctx.obj.minio.endpoint}")

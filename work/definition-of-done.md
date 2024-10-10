@@ -68,6 +68,10 @@ Running `make release` will take care of:
 - [x] Release is tagged in the repository
 - [x] GitHub Actions package workflow successfully builds and publishes the Docker container to <https://ghcr.io/serraict/vine-floriday-adapter>.
 
+Additionally, for each release:
+
+- [ ] CHANGELOG.md is updated following the guidelines from https://keepachangelog.com/, documenting all changes since the last release
+
 ## Final Checks
 
 - [ ] GitHub Actions CI workflow passes on the main branch, running all quality checks

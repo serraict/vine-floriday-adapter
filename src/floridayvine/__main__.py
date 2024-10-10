@@ -1,19 +1,17 @@
 from dataclasses import dataclass
 import typer
-from .minio import MinioClient
-from .commands import version, minio, floriday, database, sync
+from .commands import version, floriday, database, sync
 
 app = typer.Typer()
 
 
 @dataclass
 class Common:
-    minio: MinioClient
+    pass
 
 
 def register_commands():
     app.add_typer(version.app, name="version")
-    app.add_typer(minio.app, name="minio")
     app.add_typer(floriday.app, name="floriday")
     app.add_typer(database.app, name="db")
     app.add_typer(sync.app, name="sync")
@@ -22,11 +20,8 @@ def register_commands():
 @app.callback()
 def common(
     ctx: typer.Context,
-    minio_endpoint: str = typer.Option(..., envvar="MINIO_ENDPOINT"),
-    minio_access_key: str = typer.Option(..., envvar="MINIO_ACCESS_KEY"),
-    minio_secret_key: str = typer.Option(..., envvar="MINIO_SECRET_KEY"),
 ):
-    ctx.obj = Common(MinioClient(minio_endpoint, minio_access_key, minio_secret_key))
+    ctx.obj = Common()
 
 
 def main():

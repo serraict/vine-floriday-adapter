@@ -63,9 +63,6 @@ Done syncing organizations
 Follow the steps in Development.
 See the [tests](./tests) directory for example usages.
 
-Once the files are uploaded to Minio, you can create a virtual dataset in your data lake
-as described in this [Serra Learning on formatting a directory as a dataset].
-
 ### As a Container in Serra Vine
 
 See [docker-compose.yml](./docker-compose.yml) for an example to configure the service in Serra Vine.
@@ -76,4 +73,3 @@ Your environment variables can be configured in the compose file or in a separat
  [Floriday]: https://www.floriday.io/en/home
  [Serra Vine]: https://vine.serraict.com
  [backlog]: ./work/backlog.md
- [Serra Learning on formatting a directory as a dataset]: https://serra.fibery.io/Public/Learning/Een-virtuele-dataset-maken-van-een-directory-met-json-bestanden-247?sharing-key=b3769410-f4ab-4926-800e-87e345f535b2
