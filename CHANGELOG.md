@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New script `scripts/verify_env_vars.py` to verify environment variables
+- Deployment directory with documentation and configuration files for Serra Vine deployment
+
 ### Removed
 
 - Minio functionality has been completely removed from the project

@@ -21,6 +21,15 @@ floridayvine --help
 
 Now you can run and debug the command line script `floridayvine`.
 
+### Environment Variable Verification
+
+To verify that all required environment variables are properly defined, use the `verify_env_vars.py` script:
+
+```bash
+python scripts/verify_env_vars.py
+```
+
+
 ## Releasing
 
 To make a release, add a tag like `v0.9.1` and push it.

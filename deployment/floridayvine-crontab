@@ -1,0 +1,13 @@
+# Floridayvine crontab
+
+# Run synchronization every hour
+0 * * * * docker exec floridayvine floridayvine sync-organizations
+
+# Run trade item synchronization every 2 hours
+0 */2 * * * docker exec floridayvine floridayvine sync-trade-items
+
+# Run direct sales synchronization every 4 hours
+0 */4 * * * docker exec floridayvine floridayvine sync-direct-sales
+
+# Print sync status daily at midnight
+0 0 * * * docker exec floridayvine floridayvine print-sync-status

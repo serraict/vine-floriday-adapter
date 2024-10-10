@@ -10,15 +10,15 @@ Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
 ## Next
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment
-  * (Must, M) Create script to verify environment variables
-    - Develop a Python script to check .env.default and .env.example files
-    - Script should compare variables used in the application against those defined in .env files
-    - Implement error reporting for missing or mismatched variables
-    - Add script to CI/CD pipeline
-    - Acceptance: Script successfully identifies all used variables and reports discrepancies
-  * (Should, L) Deploy to a Serra Vine production system
-    - Prepare deployment documentation
+  * (Should, L) Deploy to a Serra Vine production system.
+    Serra vine runs docker containers configured in multiple docker compose files.
+    The env files are saved as .env.example fils. On deploy, they are modified on the host system manually.
+    - Prepare deployment documentation, preferrable just the files or a directory to copy-paste.
+    - Add script to verify successful installation
     - Set up necessary credentials and access for production environment
+    - Add example compose files that use the floridayvine container image,
+      a mongodb instance and the appropriate crontab and .env files.
+      These file should be copied to a Serra Vine environment and configured on the host system.
     - Configure CI/CD pipeline for automated deployment
     - Perform a test deployment to staging environment
     - Execute production deployment
@@ -32,9 +32,9 @@ Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
   * Sync trade items to local database
   * Sync direct sales
   * create a Serra Vine dashboard for open quotations
-* Goal: learn/ understand the FLoriday api
-  * Watch Floriday instruction videos and read som tutorials
-  * Understand and implement a client for Floriday synchronization mechanism
-    * implement it for trade items
+* Create a local catalog
+  * Copy trade items
+  * Translate vbn codes
+  * Download images 
 
 ## Out of Scope
