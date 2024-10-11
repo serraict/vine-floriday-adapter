@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import typer
-from .commands import about, floriday, database, sync
+from .commands import about, inventory, database, sync
 
 app = typer.Typer()
 
@@ -12,7 +12,7 @@ class Common:
 
 def register_commands():
     app.add_typer(about.app, name="about")
-    app.add_typer(floriday.app, name="floriday")
+    app.add_typer(inventory.app, name="inventory")
     app.add_typer(database.app, name="db")
     app.add_typer(sync.app, name="sync")
 
