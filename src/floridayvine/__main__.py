@@ -35,7 +35,13 @@ def check_environment_variables():
         "FLORIDAY_API_KEY",
         "MONGODB_CONNECTION_STRING",
     ]
-    missing_vars = [var for var in required_vars if not os.getenv(var)]
+    missing_vars = []
+    for var in required_vars:
+        value = os.getenv(var)
+        if not value:
+            missing_vars.append(var)
+        print(f"Environment variable {var}: {'[SET]' if value else '[NOT SET]'}")
+
     if missing_vars:
         print(
             f"Error: Missing required environment variables: {', '.join(missing_vars)}"
