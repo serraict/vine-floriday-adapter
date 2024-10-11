@@ -9,15 +9,24 @@ Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
 
 * Clean up the command line interface, so that it is consistent, explorable and user friendly
   - Review current CLI structure and document areas for improvement (Done)
-  - Propose a consistent naming convention for all commands
-  - Suggest a reorganized command structure to improve clarity and reduce duplication
-  - Draft improved help messages for all commands
-  - Propose a standardized output format for all commands
-  - Implement basic error handling for all commands
+  - Propose a consistent naming convention for all commands (Done)
+  - Suggest a reorganized command structure to improve clarity and reduce duplication (Done)
+  - Draft improved help messages for all commands (Partially done)
+  - Implement basic error handling for all commands (Partially done)
+  - Update tests to reflect CLI changes (Done for unit tests)
+  - Update CLI documentation in README.md (Done)
 
 ## Next
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment
+  * Finalize CLI cleanup
+    - Review and improve help messages for all commands
+    - Implement consistent error handling across all commands
+    - Ensure all unit tests pass with the new CLI structure
+  * Address integration test failures
+    - Review and update integration test setup
+    - Ensure development environment is properly configured for integration tests
+    - Document the process for setting up the environment for integration tests
   * (Should, L) Deploy to a Serra Vine production system.
     Serra vine runs docker containers configured in multiple docker compose files.
     The env files are saved as .env.example fils. On deploy, they are modified on the host system manually.

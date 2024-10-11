@@ -29,6 +29,23 @@ To verify that all required environment variables are properly defined, use the 
 python scripts/verify_env_vars.py
 ```
 
+### Testing
+
+This project uses pytest for testing. There are two types of tests:
+
+1. Unit tests: These test individual components and don't require external connections.
+2. Integration tests: These test the interaction with Floriday API and the database.
+
+To run tests:
+
+```bash
+make test
+make test-integration
+```
+
+Note: The pre-commit hook does not include running tests. It's important to run tests manually before pushing changes or deploying.
+
+Integration tests require proper setup of the development environment, including correct credentials and connections to Floriday and the database.
 
 ## Releasing
 

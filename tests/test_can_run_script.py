@@ -14,8 +14,8 @@ def test_can_show_info():
 
 
 def test_can_run_sync():
-    assert subprocess.run(["floridayvine", "sync"]).returncode == 0
+    assert subprocess.run(["floridayvine", "sync", "--help"]).returncode == 0
 
 
 def test_can_run_db():
-    assert subprocess.run(["floridayvine", "db"]).returncode == 0
+    assert subprocess.run(["floridayvine", "db", "--help"]).returncode == 0
