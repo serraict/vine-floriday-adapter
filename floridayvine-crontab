@@ -1,4 +1,4 @@
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 * * * * * root echo "Cron job triggered at $(date)" >> /var/log/cron.log 2>&1
-* * * * * root floridayvine upload /floridayvine/tests/data  >> /var/log/cron.log 2>&1
+* * * * * root floridayvine sync status  >> /var/log/cron.log 2>&1
 # there has to be a single newline at the end, hence this comment

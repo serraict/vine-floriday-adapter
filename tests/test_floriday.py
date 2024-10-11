@@ -46,6 +46,10 @@ def test_can_sync_organizations():
     )
 
 
+def test_can_print_sync_status():
+    assert subprocess.run(["floridayvine", "sync", "status"]).returncode == 0
+
+
 def test_can_sync_trade_items():
     assert (
         subprocess.run(
