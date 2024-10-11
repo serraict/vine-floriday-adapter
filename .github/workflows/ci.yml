@@ -27,7 +27,9 @@ jobs:
         python-version: "3.12"
     - name: Set up environment variables
       run: |
-        cp .env.example .env
+        set -a
+        source .env.example
+        set +a
     - name: Install dependencies
       run: |
         make update
