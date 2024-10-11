@@ -29,9 +29,15 @@ headers = {
 
 
 def get_access_token():
-    response = requests.request("POST", AUTH_URL, headers=headers, data=payload)
-    response.raise_for_status()
-    return response.json().get("access_token")
+    try:
+        response = requests.request("POST", AUTH_URL, headers=headers, data=payload)
+        response.raise_for_status()
+        return response.json().get("access_token")
+    except requests.exceptions.RequestException as e:
+        print(f"Error getting access token: {str(e)}")
+        if e.response is not None:
+            print(f"Response content: {e.response.content}")
+        raise
 
 
 _api_factory = api_factory.ApiFactory()
@@ -39,18 +45,24 @@ _clt = _api_factory.get_api_client()
 
 
 def get_organizations():
-    access_token = get_access_token()
-    url = f"{BASE_URL}/auth/key"
+    try:
+        access_token = get_access_token()
+        url = f"{BASE_URL}/auth/key"
 
-    headers = {
-        "X-Api-Key": API_KEY,
-        "Accept": "application/json",
-        "Authorization": f"Bearer {access_token}",
-    }
+        headers = {
+            "X-Api-Key": API_KEY,
+            "Accept": "application/json",
+            "Authorization": f"Bearer {access_token}",
+        }
 
-    response = requests.get(url, headers=headers)
-    response.raise_for_status()
-    return response.json()
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error getting organizations: {str(e)}")
+        if e.response is not None:
+            print(f"Response content: {e.response.content}")
+        raise
 
 
 def sync_entities(
