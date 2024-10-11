@@ -28,16 +28,20 @@ headers = {
 }
 
 
+def handle_request_exception(e, context):
+    print(f"Error {context}: {str(e)}")
+    if e.response is not None:
+        print(f"Response content: {e.response.content}")
+    raise
+
+
 def get_access_token():
     try:
         response = requests.request("POST", AUTH_URL, headers=headers, data=payload)
         response.raise_for_status()
         return response.json().get("access_token")
     except requests.exceptions.RequestException as e:
-        print(f"Error getting access token: {str(e)}")
-        if e.response is not None:
-            print(f"Response content: {e.response.content}")
-        raise
+        handle_request_exception(e, "getting access token")
 
 
 _api_factory = None
@@ -68,10 +72,7 @@ def get_organizations():
         response.raise_for_status()
         return response.json()
     except requests.exceptions.RequestException as e:
-        print(f"Error getting organizations: {str(e)}")
-        if e.response is not None:
-            print(f"Response content: {e.response.content}")
-        raise
+        handle_request_exception(e, "getting organizations")
 
 
 def sync_entities(
