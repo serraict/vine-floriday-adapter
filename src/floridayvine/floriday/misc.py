@@ -40,8 +40,17 @@ def get_access_token():
         raise
 
 
-_api_factory = api_factory.ApiFactory()
-_clt = _api_factory.get_api_client()
+_api_factory = None
+_clt = None
+
+
+def get_api_client():
+    global _api_factory, _clt
+    if _api_factory is None:
+        _api_factory = api_factory.ApiFactory()
+    if _clt is None:
+        _clt = _api_factory.get_api_client()
+    return _clt
 
 
 def get_organizations():
@@ -98,7 +107,7 @@ def sync_entities(
 
 
 def sync_organizations(start_seq_number=None, limit_result=5):
-    api = OrganizationsApi(_clt)
+    api = OrganizationsApi(get_api_client())
 
     def persist_org(org):
         persist("organizations", org.organization_id, org.to_dict())
@@ -116,19 +125,19 @@ def sync_organizations(start_seq_number=None, limit_result=5):
 
 
 def get_trade_items():
-    api = TradeItemsApi(_clt)
+    api = TradeItemsApi(get_api_client())
     items = api.get_trade_items()
     return items
 
 
 def get_direct_sales():
-    api = DirectSalesApi(_clt)
+    api = DirectSalesApi(get_api_client())
     items = api.get_supply_lines()
     return items
 
 
 def sync_trade_items(start_seq_number=None, limit_result=5):
-    api = TradeItemsApi(_clt)
+    api = TradeItemsApi(get_api_client())
 
     def persist_item(item):
         persist("trade_items", item.trade_item_id, item.to_dict())
