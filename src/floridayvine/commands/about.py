@@ -2,12 +2,42 @@ import typer
 from importlib.metadata import version as get_package_version
 from pprint import pprint
 from ..floriday.misc import get_organizations
+from pymongo import MongoClient
+from ..persistence import (
+    masked_connection_string,
+    mongodb_connection_string,
+    check_database_status,
+)
 
 app = typer.Typer(invoke_without_command=True)
 
 
 def get_version():
     return get_package_version("floridayvine")
+
+
+def check_database_connection():
+    if not mongodb_connection_string:
+        return "MONGODB_CONNECTION_STRING environment variable is not set."
+
+    try:
+        client = MongoClient(mongodb_connection_string, serverSelectionTimeoutMS=5000)
+        # Try to get server info
+        server_info = client.server_info()
+
+        # Check database status
+        db_status, db_message = check_database_status()
+
+        if db_status:
+            return f"Successfully connected to the database at {masked_connection_string}. Server version: {server_info.get('version', 'Unknown')}. {db_message}"
+        else:
+            return f"""Connected to the database at {masked_connection_string}, but there are issues:
+
+            {db_message}.
+
+            Please run 'floridayvine db init' to set up the database properly."""
+    except Exception as e:
+        return f"Failed to connect to the database at {masked_connection_string}. Error: {str(e)}"
 
 
 @app.callback()
@@ -27,12 +57,16 @@ def version():
 @app.command()
 def show_info():
     """
-    Display information about Floriday Vine and its connection to Floriday.
+    Display information about Floriday Vine, its connection to Floriday, and database status.
     """
     print(
         "Floriday Vine is a Python package to ingest Floriday trade information into Serra Vine."
     )
     print(f"Version: {get_version()}")
+
+    print("\nDatabase Connection Status:")
+    print(check_database_connection())
+
     print("\nFloriday Connection Status:")
     try:
         orgs = get_organizations()

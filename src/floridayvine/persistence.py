@@ -12,6 +12,30 @@ DATABASE = "floriday"
 SYNC_COLLECTIONS = ["organizations", "trade_items"]
 
 
+def check_database_status():
+    with MongoClient(mongodb_connection_string) as client:
+        # Check if the database exists
+        db_names = client.list_database_names()
+        db_exists = DATABASE in db_names
+
+        if not db_exists:
+            return False, "Database does not exist"
+
+        db = client[DATABASE]
+
+        # Check if required collections exist and have the necessary index
+        for collection_name in SYNC_COLLECTIONS:
+            if collection_name not in db.list_collection_names():
+                return False, f"Collection {collection_name} does not exist"
+
+            collection = db[collection_name]
+            indices = collection.index_information()
+            if "sequence_number_-1" not in indices:
+                return False, f"Required index missing in {collection_name}"
+
+        return True, "Database and indices are properly set up"
+
+
 def initialize_database():
     """
     Initialize the database.
@@ -29,6 +53,7 @@ def initialize_database():
             # retrieve the maximum sequence number for a collection to use as the base of
             # the synchronization process.
             collection.create_index([("sequence_number", -1)])
+        print("Database initialization complete.")
 
 
 def get_max_sequence_number(collection_name: str):
