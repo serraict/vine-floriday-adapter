@@ -1,13 +1,16 @@
 services:
   floridayvine:
-    image: ghcr.io/serraict/vine-floriday-adapter:latest
+    image: ghcr.io/serraict/vine-floriday-adapter:v0.12.2
     container_name: floridayvine
     depends_on:
       - mongo
     networks:
       - serra-vine
     env_file:
-      - ./.env
+      - ./floridayvine/.env
+    volumes:
+      # mount your crontab file here:
+      - ./floridayvine/floridayvine-crontab:/etc/cron.d/floridayvine-crontab:ro
 
   mongo:
     image: mongo:4.4
@@ -22,7 +25,7 @@ services:
     volumes:
       - mongodb-data:/data/db
     env_file:
-      - ./.env
+      - ./floridayvine/.env
 
   mongo-express:
     image: mongo-express:latest
@@ -34,7 +37,7 @@ services:
     networks:
       - serra-vine
     env_file:
-      - ./.env
+      - ./floridayvine/.env
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"

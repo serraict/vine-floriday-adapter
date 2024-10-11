@@ -9,41 +9,37 @@ This document provides instructions for deploying the vine-floriday-adapter to a
 
 ## Deployment Steps
 
-1. Copy the following files to the Serra Vine environment:
+1. Create a new directory named 'floridayvine' in the Serra Vine environment and copy the following files into it:
 
    - `floridayvine-docker-compose.yml`
-   - `.env.example`
-   - `verify_installation.sh`
+   - `.env.example` (rename to `.env`)
    - `floridayvine-crontab`
 
-2. Rename `.env.example` to `.env` and update the environment variables with the appropriate values for the production environment.
+2. Copy `verify_installation.sh` to the parent directory of 'floridayvine'.
 
-3. Include the `floridayvine-docker-compose.yml` file in the main Serra Vine docker compose file. This can typically be done by adding an `include` statement in the main docker-compose.yml file:
+3. Rename `.env.example` to `.env` and update the environment variables with the appropriate values for the production environment.
+
+4. Include the `floridayvine-docker-compose.yml` file in the main Serra Vine docker compose file. This can typically be done by adding an `include` statement in the main docker-compose.yml file:
 
    ```yaml
    include:
-     - floridayvine-docker-compose.yml
+     - floridayvine/floridayvine-docker-compose.yml
    ```
 
-4. Ensure that the Serra Vine docker-compose file is configured to use the floridayvine services as needed.
+5. Ensure that the Serra Vine docker-compose file is configured to use the floridayvine services as needed.
 
-5. Set up necessary credentials and access:
+6. Set up necessary credentials and access:
    - Obtain Floriday API credentials and update the .env file accordingly
    - Set up MongoDB access and update the connection string in the .env file
 
-6. Set up the crontab for scheduled tasks:
-   - Review the `floridayvine-crontab` file and adjust the schedule if needed
-   - Install the crontab on the host system:
-     ```
-     crontab floridayvine-crontab
-     ```
+7. The crontab file is now mounted as a volume in the Docker Compose file. Ensure that the `floridayvine-crontab` file is in the correct location (./floridayvine/floridayvine-crontab) and contains the appropriate scheduled tasks.
 
-7. Perform a test deployment to staging environment (if available):
+8. Perform a test deployment to staging environment (if available):
    - Deploy the services to the staging environment using the docker-compose command
    - Run the verification script: `./verify_installation.sh`
    - Test the functionality in the staging environment
 
-8. Execute production deployment:
+9. Execute production deployment:
    - Once staging deployment is successful, deploy to the production environment
    - Run the docker-compose command to start the services:
 
@@ -51,17 +47,17 @@ This document provides instructions for deploying the vine-floriday-adapter to a
      docker-compose up -d
      ```
 
-9. Verify the installation by running the verification script:
+10. Verify the installation by running the verification script:
 
-   ```
-   ./verify_installation.sh
-   ```
+    ```
+    ./verify_installation.sh
+    ```
 
-10. Verify functionality in production environment:
+11. Verify functionality in production environment:
     - Ensure all services are running correctly
     - Test the main features of the floridayvine adapter
     - Monitor logs for any errors or issues
-    - Verify that scheduled tasks are running as expected (check cron logs)
+    - Verify that scheduled tasks are running as expected (check Docker logs for the floridayvine container)
 
 ## Verifying the Deployment
 
@@ -79,7 +75,7 @@ If you encounter any issues during deployment, please check the following:
 - Docker logs for the floridayvine container
 - MongoDB connection string in the .env file
 - Floriday API credentials in the .env file
-- Cron logs for scheduled task execution
+- Docker logs for scheduled task execution
 
 For further assistance, please contact the development team.
 
@@ -87,23 +83,16 @@ For further assistance, please contact the development team.
 
 To update the application to a new version:
 
-1. Pull the latest Docker image:
-   ```
-   docker pull ghcr.io/serraict/vine-floriday-adapter:latest
-   ```
+1. Update the image version in the `floridayvine-docker-compose.yml` file.
 
-2. Update the `floridayvine-docker-compose.yml` file if there are any changes to the service configuration.
-
-3. Restart the services:
+2. Restart the services:
    ```
    docker-compose up -d
    ```
 
-4. Run the verification script to ensure everything is working correctly:
+3. Run the verification script to ensure everything is working correctly:
    ```
    ./verify_installation.sh
    ```
 
-5. Review and update the `floridayvine-crontab` file if necessary, and reinstall it:
-   ```
-   crontab floridayvine-crontab
+4. Review and update the `floridayvine-crontab` file if necessary.
