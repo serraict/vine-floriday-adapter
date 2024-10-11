@@ -1,7 +1,6 @@
 import typer
 from importlib.metadata import version as get_package_version
 from pprint import pprint
-from ..floriday.misc import get_organizations
 from pymongo import MongoClient
 from ..persistence import (
     masked_connection_string,
@@ -69,6 +68,8 @@ def show_info():
 
     print("\nFloriday Connection Status:")
     try:
+        from ..floriday.misc import get_organizations
+
         orgs = get_organizations()
         print("Successfully connected to Floriday.")
         print("Organizations:")
