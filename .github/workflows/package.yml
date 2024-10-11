@@ -16,6 +16,14 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      FLORIDAY_CLIENT_ID: your_id
+      FLORIDAY_CLIENT_SECRET: your_secret
+      FLORIDAY_AUTH_URL: "https://idm.staging.floriday.io/oauth2/ausmw6b47z1BnlHkw0h7/v1/token"
+      FLORIDAY_BASE_URL: "https://api.staging.floriday.io/suppliers-api-2024v1"
+      FLORIDAY_API_KEY: your_api_key
+      MONGODB_CONNECTION_STRING: "mongodb://your_user:your_password@localhost:27017"
+
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python 3.12
