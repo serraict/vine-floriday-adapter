@@ -2,8 +2,8 @@ import subprocess
 
 
 def test_can_run_script():
-    subprocess.run(["floridayvine", "about"])
+    assert subprocess.run(["floridayvine", "about"]).returncode == 0
 
 
 def test_can_print_version():
-    subprocess.run(["floridayvine", "print-version"])
+    assert subprocess.run(["floridayvine", "about", "version"]).returncode == 0
