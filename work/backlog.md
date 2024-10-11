@@ -2,11 +2,6 @@
 
 ## Doing
 
-* Address integration test failures
-  - Review and update integration test setup
-  - Ensure development environment is properly configured for integration tests
-  - Document the process for setting up the environment for integration tests
-
 ## Next
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment
@@ -38,3 +33,10 @@
   * Download images 
 
 ## Out of Scope
+
+## Done
+
+* Address integration test failures
+  - Review and update integration test setup
+  - Ensure development environment is properly configured for integration tests
+  - Document the process for setting up the environment for integration tests
