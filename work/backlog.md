@@ -7,6 +7,14 @@ Containers are pushed to <https://ghcr.io/serraict/vine-floriday-adapter>.
 
 ## Doing
 
+* Clean up the command line interface, so that it is consistent, explorable and user friendly
+  - Review current CLI structure and document areas for improvement (Done)
+  - Propose a consistent naming convention for all commands
+  - Suggest a reorganized command structure to improve clarity and reduce duplication
+  - Draft improved help messages for all commands
+  - Propose a standardized output format for all commands
+  - Implement basic error handling for all commands
+
 ## Next
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment
