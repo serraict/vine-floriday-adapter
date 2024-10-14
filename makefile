@@ -38,8 +38,10 @@ release: documentation
 	fi
 	@NEW_VERSION=$$(python -m setuptools_scm --strip-dev) && \
 	sed -i '' "s/\[Unreleased\]/[$${NEW_VERSION}] - $$(date +%Y-%m-%d)/" CHANGELOG.md && \
-	git add CHANGELOG.md && \
-	git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}" -f
+	if [ -n "$$(git status --porcelain CHANGELOG.md)" ]; then \
+		git add CHANGELOG.md && \
+		git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}"; \
+	fi
 	git tag v$${NEW_VERSION} && \
 	git push origin main --tags
 docker_image:

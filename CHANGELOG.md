@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated Makefile to continue the release process even when there are no changes to commit
+- Updated Makefile to only add and commit CHANGELOG.md during release process if it has been changed
 
 ## [0.12.2] - 2024-10-11
 
