@@ -5,6 +5,11 @@ ifeq ($(VERSION),)
     VERSION := v0.0.1
 endif
 
+NEW_VERSION := $(shell python -m setuptools_scm --strip-dev)
+ifeq ($(NEW_VERSION),)
+	NEW_VERSION := 0.0.1
+endif
+
 bootstrap:
 	python -m venv venv
 	@echo "Run 'source venv/bin/activate' to activate the virtual environment, followed by 'make update' to install dependencies."
@@ -36,13 +41,12 @@ release: documentation
 		echo "Local branch is ahead of origin"; \
 		exit 1; \
 	fi
-	@NEW_VERSION=$$(python -m setuptools_scm --strip-dev) && \
-	sed -i '' "s/\[Unreleased\]/[$${NEW_VERSION}] - $$(date +%Y-%m-%d)/" CHANGELOG.md && \
+	sed -i '' "s/\[Unreleased\]/[$(NEW_VERSION)] - $$(date +%Y-%m-%d)/" CHANGELOG.md
 	if [ -n "$$(git status --porcelain CHANGELOG.md)" ]; then \
 		git add CHANGELOG.md && \
-		git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}"; \
+		git commit -m "Update CHANGELOG.md for version $(NEW_VERSION)"; \
 	fi
-	git tag v$${NEW_VERSION} && \
+	git tag v$(NEW_VERSION) && \
 	git push origin main --tags
 docker_image:
 	docker build -t ghcr.io/serraict/vine-floriday-adapter:$(VERSION) .
