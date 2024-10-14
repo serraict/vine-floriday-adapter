@@ -6,9 +6,9 @@
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment
   * (Should, L) Deploy to a Serra Vine production system.
-    - Execute production deployment
-    - Verify functionality in production environment
-    - Acceptance: Application successfully deployed and running in Serra Vine production system
+    * Execute production deployment
+    * Verify functionality in production environment
+    * Acceptance: Application successfully deployed and running in Serra Vine production system
 
 ## Later
 
@@ -20,16 +20,16 @@
 * Create a local catalog
   * Copy trade items
   * Translate vbn codes
-  * Download images 
+  * Download images
 
 ## Out of Scope
 
 ## Done
 
 * Address integration test failures
-  - Review and update integration test setup
-  - Ensure development environment is properly configured for integration tests
-  - Document the process for setting up the environment for integration tests
+  * Review and update integration test setup
+  * Ensure development environment is properly configured for integration tests
+  * Document the process for setting up the environment for integration tests
 * Prepare deployment documentation and configuration files
 * Set up necessary credentials and access for production environment
 * Configure CI/CD pipeline for automated deployment

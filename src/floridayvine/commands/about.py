@@ -8,7 +8,10 @@ from ..persistence import (
     check_database_status,
 )
 
-app = typer.Typer(invoke_without_command=True)
+app = typer.Typer(
+    invoke_without_command=True,
+    help="Display information about the Floriday Vine command line interface.",
+)
 
 
 def get_version():

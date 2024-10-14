@@ -3,11 +3,14 @@ from ..floriday.misc import sync_organizations, sync_trade_items
 from ..persistence import print_sync_status as persistence_print_sync_status
 
 
-app = typer.Typer()
+app = typer.Typer(help="Synchronize collections in the local database with Floriday.")
 
 
 @app.command()
 def status():
+    """
+    Display the synchronization status for all synchronized collections.
+    """
     persistence_print_sync_status()
 
 

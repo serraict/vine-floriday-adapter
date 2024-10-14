@@ -1,7 +1,7 @@
 import typer
 from ..persistence import initialize_database
 
-app = typer.Typer()
+app = typer.Typer(help="Database management commands.")
 
 
 @app.command()

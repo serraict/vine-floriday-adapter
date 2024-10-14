@@ -4,9 +4,8 @@ from ..floriday.misc import (
     get_trade_items,
     get_direct_sales,
 )
-from . import sync
 
-app = typer.Typer()
+app = typer.Typer(help="Inventory management commands.")
 
 
 @app.command()
@@ -25,6 +24,3 @@ def list_trade_items():
     """
     trade_items = get_trade_items()
     pprint(trade_items)
-
-
-app.add_typer(sync.app, name="sync")
