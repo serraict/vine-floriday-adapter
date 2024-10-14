@@ -39,7 +39,7 @@ release: documentation
 	@NEW_VERSION=$$(python -m setuptools_scm --strip-dev) && \
 	sed -i '' "s/\[Unreleased\]/[$${NEW_VERSION}] - $$(date +%Y-%m-%d)/" CHANGELOG.md && \
 	git add CHANGELOG.md && \
-	git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}" && \
+	git commit -m "Update CHANGELOG.md for version $${NEW_VERSION}" -f
 	git tag v$${NEW_VERSION} && \
 	git push origin main --tags
 docker_image:
