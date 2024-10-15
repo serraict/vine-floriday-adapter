@@ -2,6 +2,9 @@
 
 ## Doing
 
+* Sync trade items keeps being called, seems like it dos not start from the last known number.
+* Analyze and fix issue: Syncing entities only fetches items once, despite there being more items on Floriday.
+
 ## Next
 
 * Goal: Cleanup codebase and do the first deploy to a Serra Vine environment

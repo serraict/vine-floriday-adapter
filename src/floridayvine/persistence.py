@@ -82,6 +82,7 @@ def get_max_sequence_number(collection_name: str):
         if max_sequence_number_doc:
             max_sequence_number = max_sequence_number_doc["sequence_number"]
         else:
+            print(f"No sequence number found for collection {collection_name}.")
             max_sequence_number = 0
 
         return max_sequence_number

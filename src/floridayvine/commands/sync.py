@@ -15,7 +15,7 @@ def status():
 
 
 @app.command()
-def organizations(start_seq_number: int = 0, limit_result: int = 5):
+def organizations(start_seq_number: int = None, limit_result: int = 5):
     """
     Synchronize organizations data from Floriday.
     """
@@ -23,7 +23,7 @@ def organizations(start_seq_number: int = 0, limit_result: int = 5):
 
 
 @app.command()
-def trade_items(start_seq_number: int = 0, limit_result: int = 5):
+def trade_items(start_seq_number: int = None, limit_result: int = 5):
     """
     Synchronize trade items data from Floriday.
     """

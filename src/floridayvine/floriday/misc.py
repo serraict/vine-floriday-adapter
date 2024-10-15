@@ -76,38 +76,36 @@ def get_organizations():
 
 
 def sync_entities(
-    api,
-    entity_type,
-    get_max_sequence,
-    get_by_sequence,
-    persist_entity,
-    start_seq_number=None,
-    limit_result=5,
+    entity_type, get_by_sequence, persist_entity, start_seq_number=None, limit_result=50
 ):
     if start_seq_number is None:
         start_seq_number = get_max_sequence_number(entity_type)
 
-    my_sequence = start_seq_number
-    max_seq_nr = get_max_sequence()
+    next_sequence_start_number = start_seq_number
 
-    print(f"Syncing {entity_type} from {my_sequence} to {max_seq_nr} ...")
+    print(f"Syncing {entity_type} from {next_sequence_start_number} ...")
 
-    while my_sequence < max_seq_nr:
+    while True:
         sync_result = get_by_sequence(
-            sequence_number=my_sequence, limit_result=limit_result
+            sequence_number=next_sequence_start_number, limit_result=limit_result
         )
-        max_seq_nr = sync_result.maximum_sequence_number
+
+        if next_sequence_start_number >= sync_result.maximum_sequence_number:
+            break
+
         for entity in sync_result.results:
             print(
                 f"Seq nr {entity.sequence_number}: Persisting {persist_entity(entity)} ..."
             )
-        my_sequence = sync_result.maximum_sequence_number
+
+        next_sequence_start_number = sync_result.maximum_sequence_number
+
         time.sleep(0.5)
 
     print(f"Done syncing {entity_type}")
 
 
-def sync_organizations(start_seq_number=None, limit_result=5):
+def sync_organizations(start_seq_number=None, limit_result=50):
     api = OrganizationsApi(get_api_client())
 
     def persist_org(org):
@@ -115,9 +113,7 @@ def sync_organizations(start_seq_number=None, limit_result=5):
         return org.name
 
     sync_entities(
-        api,
         "organizations",
-        api.get_organizations_max_sequence,
         api.get_organizations_by_sequence_number,
         persist_org,
         start_seq_number,
@@ -137,7 +133,7 @@ def get_direct_sales():
     return items
 
 
-def sync_trade_items(start_seq_number=None, limit_result=5):
+def sync_trade_items(start_seq_number=None, limit_result=50):
     api = TradeItemsApi(get_api_client())
 
     def persist_item(item):
@@ -145,9 +141,7 @@ def sync_trade_items(start_seq_number=None, limit_result=5):
         return item.trade_item_name
 
     sync_entities(
-        api,
-        "trade items",
-        api.get_trade_items_max_sequence,
+        "trade_items",
         api.get_trade_items_by_sequence_number,
         persist_item,
         start_seq_number,
