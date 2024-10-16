@@ -60,28 +60,37 @@ For an example of the required environment variables, see [.env.example](.env.ex
 When setup, then:
 
 ```bash
-(venv) ➜  vine-floriday-adapter git:(main) floridayvine init-db                                                        
+(venv) ➜  vine-floriday-adapter git:(main) floridayvine db init                                                        
 Initializing database on mongodb://root:'*****'@localhost:27017...
 Created collection: organizations
 Created collection: trade_items
-(venv) ➜  vine-floriday-adapter git:(main) floridayvine print-sync-status                                          
+Created collection: supply_lines
+(venv) ➜  vine-floriday-adapter git:(main) floridayvine sync status                                          
 Max sequence number for organizations: 0
 Max sequence number for trade_items: 0
-(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync-organizations  --limit-result 3   
+Max sequence number for supply_lines: 0
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync organizations  --limit-result 3   
 Syncing organizations from 0 to 1164016 ...
 Seq nr 864747: Persisting Douwe Hoving | Potplanten ...
 Seq nr 864921: Persisting Planten Centrum Twente ...
 Seq nr 867216: Persisting VOF van Kester-Duijvesteijn ...
 Done syncing organizations
 ^C
-(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine print-sync-status                   
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync status                   
 Max sequence number for organizations: 867216
 Max sequence number for trade_items: 0
-(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync-organizations --start-seq-number 867216 --limit-result 100
+Max sequence number for supply_lines: 0
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync organizations --start-seq-number 867216 --limit-result 100
 [...]
 Seq nr 933052: Persisting  ...
 Seq nr 933053: Persisting Razek Saliman ...
 Done syncing organizations
+(venv) ➜  vine-floriday-adapter git:(main) ✗ floridayvine sync supply-lines --limit-result 3
+Syncing supply_lines from 0 ...
+Seq nr 41059699: Persisting 6584eda4-95ec-4d77-9511-d43348eefade ...
+Seq nr 41067630: Persisting c5ce4ec8-35c9-46c1-923f-eac3571599bb ...
+Seq nr 41067810: Persisting 24c77740-9103-40a1-9964-49b1be3e00b3 ...
+Done syncing supply_lines
 ```
 
 ### As a Python script

@@ -13,7 +13,7 @@ masked_connection_string = (
 )
 
 DATABASE = "floriday"
-SYNC_COLLECTIONS = ["organizations", "trade_items"]
+SYNC_COLLECTIONS = ["organizations", "trade_items", "supply_lines"]
 
 
 def check_database_status():

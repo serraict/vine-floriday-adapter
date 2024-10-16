@@ -1,5 +1,5 @@
 import typer
-from ..floriday.misc import sync_organizations, sync_trade_items
+from ..floriday.misc import sync_organizations, sync_trade_items, sync_supply_lines
 from ..persistence import print_sync_status as persistence_print_sync_status
 
 
@@ -28,3 +28,11 @@ def trade_items(start_seq_number: int = None, limit_result: int = 5):
     Synchronize trade items data from Floriday.
     """
     sync_trade_items(start_seq_number, limit_result)
+
+
+@app.command()
+def supply_lines(start_seq_number: int = None, limit_result: int = 5):
+    """
+    Synchronize supply lines data from Floriday.
+    """
+    sync_supply_lines(start_seq_number, limit_result)

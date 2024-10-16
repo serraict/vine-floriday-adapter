@@ -147,3 +147,19 @@ def sync_trade_items(start_seq_number=None, limit_result=50):
         start_seq_number,
         limit_result,
     )
+
+
+def sync_supply_lines(start_seq_number=None, limit_result=50):
+    api = DirectSalesApi(get_api_client())
+
+    def persist_supply_line(supply_line):
+        persist("supply_lines", supply_line.supply_line_id, supply_line.to_dict())
+        return supply_line.supply_line_id
+
+    sync_entities(
+        "supply_lines",
+        api.get_supply_lines_by_sequence_number,
+        persist_supply_line,
+        start_seq_number,
+        limit_result,
+    )
