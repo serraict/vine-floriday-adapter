@@ -3,15 +3,16 @@
 ## Doing
 
 Set up Codecov:
-
-- [x] Create a Codecov account and link it to the GitHub repository
+- [x] Update CI workflow to use pytest-cov
+- [x] Update makefile to use pytest-cov
+- [x] Install Codecov GitHub App for the organization
+- [x] Configure repository access for Codecov
 - [x] Add CODECOV_TOKEN to GitHub repository secrets
 - [ ] Verify Codecov integration by pushing a change and checking the coverage report
 
 ## Next
 
 Improve test coverage:
-
 - Target: Achieve 70-80% overall coverage
 - Focus areas:
   1. `__main__.py` (currently 0%)
