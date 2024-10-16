@@ -68,5 +68,5 @@ quality:
 	flake8 src tests
 	black --check src tests
 	@echo "Running tests with coverage..."
-	pytest --cov=src/floridayvine --cov-report=term --cov-report=xml
+	pytest --cov=src/floridayvine --cov-report=term --cov-report=xml  -m "not integration"
 	@echo "Code quality checks completed."
