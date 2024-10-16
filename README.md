@@ -1,5 +1,7 @@
 # vine-floriday-adapter
 
+[![Coverage](https://codecov.io/gh/serraict/vine-floriday-adapter/branch/main/graph/badge.svg)](https://codecov.io/gh/serraict/vine-floriday-adapter)
+
 This adapter will make trade information from [Floriday] available on a [Serra Vine] instance of choice.
 
 See the [backlog] to learn what's next and planned.

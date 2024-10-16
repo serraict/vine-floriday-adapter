@@ -36,9 +36,18 @@ jobs:
     - name: Install dependencies
       run: |
         make update
-    - name: Run quality checks
+    - name: Run quality checks and tests with coverage
       run: |
         make quality
+        coverage xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: true
     - name: Package
       run: |
         make docker_image

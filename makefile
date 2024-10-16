@@ -19,9 +19,15 @@ update:
 	pip install -e .
 console:
 test:
-	pytest -m "not integration"
+	coverage run -m pytest -m "not integration"
+	coverage report
 test-integration:
-	pytest -m "integration"
+	coverage run -m pytest -m "integration"
+	coverage report
+coverage:
+	coverage run -m pytest
+	coverage report
+	coverage html
 build:
 	python -m build
 documentation:
@@ -65,7 +71,7 @@ quality:
 	@echo "Running code quality checks..."
 	flake8 src tests
 	black --check src tests
-	pre-commit run --all-files
-	@echo "Running tests..."
-	pytest -m "not integration"
+	@echo "Running tests with coverage..."
+	coverage run -m pytest
+	coverage report
 	@echo "Code quality checks completed."
