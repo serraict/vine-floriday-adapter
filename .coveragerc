@@ -11,3 +11,7 @@ exclude_lines =
     pass
     except ImportError:
     def main
+
+omit =
+    tests/*
+    */__init__.py

@@ -8,17 +8,17 @@ Set up Codecov:
 - [x] Install Codecov GitHub App for the organization
 - [x] Configure repository access for Codecov
 - [x] Add CODECOV_TOKEN to GitHub repository secrets
+- [x] Configure coverage to focus on src/floridayvine directory
 - [ ] Verify Codecov integration by pushing a change and checking the coverage report
 
 ## Next
 
 Improve test coverage:
-- Target: Achieve 70-80% overall coverage
-- Focus areas:
-  1. `__main__.py` (currently 0%)
-  2. `config.py` (currently 0%)
-  3. `persistence.py` (currently 19%)
-  4. `floriday/misc.py` (currently 51%)
+- Target: Achieve and maintain 80% overall coverage for src/floridayvine
+- Focus areas (in order of priority):
+  1. `persistence.py` (currently 37%)
+  2. `config.py` (currently 58%)
+  3. `floriday/misc.py` (currently 65%)
 - Add unit tests for uncovered functions and methods
 - Add integration tests for key workflows
 

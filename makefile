@@ -19,11 +19,11 @@ update:
 	pip install -e .
 console:
 test:
-	pytest --cov=./ --cov-report=term -m "not integration"
+	pytest --cov=src/floridayvine --cov-report=term -m "not integration"
 test-integration:
-	pytest --cov=./ --cov-report=term -m "integration"
+	pytest --cov=src/floridayvine --cov-report=term -m "integration"
 coverage:
-	pytest --cov=./ --cov-report=term --cov-report=html
+	pytest --cov=src/floridayvine --cov-report=term --cov-report=html
 build:
 	python -m build
 documentation:
@@ -68,5 +68,5 @@ quality:
 	flake8 src tests
 	black --check src tests
 	@echo "Running tests with coverage..."
-	pytest --cov=./ --cov-report=term --cov-report=xml -m "not integration"
+	pytest --cov=src/floridayvine --cov-report=term --cov-report=xml
 	@echo "Code quality checks completed."
