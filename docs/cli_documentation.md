@@ -87,6 +87,7 @@
 ╭─ Commands ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ organizations   Synchronize organizations data from Floriday.                                                                                        │
 │ status          Display the synchronization status for all synchronized collections.                                                                 │
+│ supply-lines    Synchronize supply lines data from Floriday.                                                                                         │
 │ trade-items     Synchronize trade items data from Floriday.                                                                                          │
 ╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 
