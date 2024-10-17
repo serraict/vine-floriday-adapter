@@ -2,27 +2,18 @@
 
 ## Doing
 
-Set up Codecov:
-- [x] Update CI workflow to use pytest-cov
-- [x] Update makefile to use pytest-cov
-- [x] Install Codecov GitHub App for the organization
-- [x] Configure repository access for Codecov
-- [x] Add CODECOV_TOKEN to GitHub repository secrets
-- [x] Configure coverage to focus on src/floridayvine directory
-- [ ] Verify Codecov integration by pushing a change and checking the coverage report
+Improve test coverage:
+
+* Target: Achieve and maintain 80% overall coverage for src/floridayvine (currently 65%)
+* see if the new test are robust.
+* Focus areas (in order of priority):
+  1. `floriday/misc.py` (currently 51%)
+  2. `persistence.py` (currently 90%)
+     - Add tests for remaining uncovered lines (38-43, 72-73)
+* Add unit tests for uncovered functions and methods
+* Add integration tests for key workflows
 
 ## Next
-
-Improve test coverage:
-- Target: Achieve and maintain 80% overall coverage for src/floridayvine
-- Focus areas (in order of priority):
-  1. `persistence.py` (currently 37%)
-  2. `config.py` (currently 58%)
-  3. `floriday/misc.py` (currently 65%)
-- Add unit tests for uncovered functions and methods
-- Add integration tests for key workflows
-
-## Later
 
 * Goal: show open quotations for a supplier on Floriday.
   * Create a Serra Vine dashboard for open quotations
