@@ -1,6 +1,6 @@
 services:
   floridayvine:
-    image: ghcr.io/serraict/vine-floriday-adapter:v0.12.2
+    image: ghcr.io/serraict/vine-floriday-adapter:latest
     container_name: floridayvine
     depends_on:
       - mongo

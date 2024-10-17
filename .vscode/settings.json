@@ -7,9 +7,8 @@
         "pymongo",
         "pytestmark"
     ],
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Args": ["--config=.flake8"],
     "editor.formatOnSave": true,
-    "python.formatting.provider": "black"
+    "python.analysis.exclude": [
+        "**/.coveragerc"
+    ]
 }
