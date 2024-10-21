@@ -71,9 +71,9 @@ def show_info():
 
     print("\nFloriday Connection Status:")
     try:
-        from ..floriday.misc import get_organizations
+        from ..floriday.misc import get_auth_info
 
-        orgs = get_organizations()
+        orgs = get_auth_info()
         print("Successfully connected to Floriday.")
         print("Organizations:")
         pprint(orgs)

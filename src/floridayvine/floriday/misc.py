@@ -57,7 +57,7 @@ def get_api_client():
     return _clt
 
 
-def get_organizations():
+def get_auth_info():
     try:
         access_token = get_access_token()
         url = f"{BASE_URL}/auth/key"
