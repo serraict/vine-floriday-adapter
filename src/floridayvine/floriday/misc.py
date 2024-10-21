@@ -9,6 +9,7 @@ from floriday_supplier_client import (
     OrganizationsApi,
 )
 
+# Constants
 CLIENT_ID = os.getenv("FLORIDAY_CLIENT_ID")
 CLIENT_SECRET = os.getenv("FLORIDAY_CLIENT_SECRET")
 API_KEY = os.getenv("FLORIDAY_API_KEY")
@@ -28,6 +29,7 @@ headers = {
 }
 
 
+# Authentication and API Client
 def _handle_request_exception(e, context):
     print(f"Error {context}: {str(e)}")
     if e.response is not None:
@@ -75,6 +77,7 @@ def get_auth_info():
         _handle_request_exception(e, "getting organizations")
 
 
+# Generic Sync Function
 def sync_entities(
     entity_type, get_by_sequence, persist_entity, start_seq_number=None, limit_result=50
 ):
@@ -105,6 +108,10 @@ def sync_entities(
     print(f"Done syncing {entity_type}")
 
 
+# Entity-specific Functions
+
+
+# Organizations
 def sync_organizations(start_seq_number=None, limit_result=50):
     api = OrganizationsApi(get_api_client())
 
@@ -121,15 +128,10 @@ def sync_organizations(start_seq_number=None, limit_result=50):
     )
 
 
+# Trade Items
 def get_trade_items():
     api = TradeItemsApi(get_api_client())
     items = api.get_trade_items()
-    return items
-
-
-def get_direct_sales():
-    api = DirectSalesApi(get_api_client())
-    items = api.get_supply_lines()
     return items
 
 
@@ -147,6 +149,13 @@ def sync_trade_items(start_seq_number=None, limit_result=50):
         start_seq_number,
         limit_result,
     )
+
+
+# Direct Sales
+def get_direct_sales():
+    api = DirectSalesApi(get_api_client())
+    items = api.get_supply_lines()
+    return items
 
 
 def sync_supply_lines(start_seq_number=None, limit_result=50):
