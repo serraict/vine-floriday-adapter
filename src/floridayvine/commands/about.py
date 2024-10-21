@@ -7,6 +7,7 @@ from ..persistence import (
     mongodb_connection_string,
     check_database_status,
 )
+from ..floriday.auth import get_auth_info
 
 app = typer.Typer(
     invoke_without_command=True,
@@ -71,8 +72,6 @@ def show_info():
 
     print("\nFloriday Connection Status:")
     try:
-        from ..floriday.misc import get_auth_info
-
         orgs = get_auth_info()
         print("Successfully connected to Floriday.")
         print("Organizations:")

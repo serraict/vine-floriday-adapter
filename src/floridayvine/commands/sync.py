@@ -1,5 +1,5 @@
 import typer
-from ..floriday.misc import sync_organizations, sync_trade_items, sync_supply_lines
+from ..floriday.entities import sync_organizations, sync_trade_items, sync_supply_lines
 from ..persistence import print_sync_status as persistence_print_sync_status
 
 

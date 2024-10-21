@@ -1,6 +1,6 @@
 import typer
 from pprint import pprint
-from ..floriday.misc import (
+from ..floriday.entities import (
     get_trade_items,
     get_direct_sales,
 )
