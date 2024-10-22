@@ -4,8 +4,9 @@ Tests for Floriday authentication and API client functionality.
 
 import pytest
 from unittest.mock import patch, MagicMock
-from floridayvine.floriday.auth import get_access_token
+from floridayvine.floriday.auth import get_access_token, get_auth_info
 from floridayvine.floriday.api_client import get_api_client
+from requests.exceptions import RequestException
 
 
 @patch("floridayvine.floriday.auth.requests.request")
@@ -20,10 +21,32 @@ def test_get_access_token_success(mock_request):
 
 @patch("floridayvine.floriday.auth.requests.request")
 def test_get_access_token_failure(mock_request):
-    mock_request.side_effect = Exception("Test error")
+    mock_request.side_effect = RequestException("Test error")
 
-    with pytest.raises(Exception):
+    with pytest.raises(RequestException):
         get_access_token()
+
+
+@patch("floridayvine.floriday.auth.get_access_token")
+@patch("floridayvine.floriday.auth.requests.get")
+def test_get_auth_info_success(mock_get, mock_get_access_token):
+    mock_get_access_token.return_value = "test_token"
+    mock_response = MagicMock()
+    mock_response.json.return_value = {"key": "value"}
+    mock_get.return_value = mock_response
+
+    result = get_auth_info()
+    assert result == {"key": "value"}
+
+
+@patch("floridayvine.floriday.auth.get_access_token")
+@patch("floridayvine.floriday.auth.requests.get")
+def test_get_auth_info_failure(mock_get, mock_get_access_token):
+    mock_get_access_token.return_value = "test_token"
+    mock_get.side_effect = RequestException("Test error")
+
+    with pytest.raises(RequestException):
+        get_auth_info()
 
 
 @patch("floridayvine.floriday.api_client.api_factory.ApiFactory")
