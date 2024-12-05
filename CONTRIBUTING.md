@@ -1,13 +1,23 @@
-# Definition of Done
+# Contributing
 
-This document outlines the specific criteria that must be met for a new increment of our application to be considered releasable.
+This document describes how we work and collaborate on this project.
+It describes our workflow
+and outlines the specific criteria that must be met
+for a new increment of our application to be considered releasable.
 It serves as a checklist for developers and AI agents to ensure quality and consistency in our releases.
+
+## Workflow
+
+In our [backlog] we list what we think we need to build to achieve our [product vision].
+In [doing] we describe what we are currently working on.
+Maintaining this information in plain text in out repository allows us to easily collaborate with AI agents.
 
 ## Code Quality
 
 Our code is well-readable and understandable for humans and AI agents.
 For this application, we prefer readability, simplicity, and understandability over performance.
-Therefore, we lint with `flake8`, format with `black` and `pytest` before we commit.
+
+We lint with `flake8`, format with `black` and `pytest` before we commit.
 Enforced on merges to `main` by [`ci.yml` Github action](.github/workflows/ci.yml).
 
 Measure: `make quality`
@@ -34,7 +44,7 @@ The documentation is accessible to the end users on the command line.
 
 For other players, we rely on manual inspection of the following:
 
-- [ ] <../README.md> is updated with any new features, dependencies, or usage instructions
+- [ ] <../CHANGELOG.md> is updated with any new features, dependencies, or usage instructions
 - [ ] Any new environment variables are added to both `.env.example` and `mongo/.env.default`
 - [ ] <../docs/software_architecture.md> is up-to-date with the current architecture and design forces.
 - [ ] <../docs/cli_documentation.md> is helpful to get an overview of the capabilities of the application.
@@ -90,5 +100,9 @@ The following items are considered important for future releases but are not cur
   - [ ] Linux
   - [ ] Mac OSX
 
-This Definition of Done should be reviewed and updated periodically to reflect the evolving needs of the project.
+This contributing guideline should be reviewed and updated periodically to reflect the evolving needs of the project.
 Items from the "Undone for now" section should be considered for inclusion in the main DoD as they become implemented and integrated into our development process.
+
+[backlog]: ./work/backlog.md
+[doing]: ./work/doing.md
+[product vision]: ./readme.md

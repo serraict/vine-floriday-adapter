@@ -5,6 +5,7 @@
 This adapter will make trade information from [Floriday] available on a [Serra Vine] instance of choice.
 
 See the [backlog] to learn what's next and planned.
+See [contributing] to learn how we go about our work.
 
 Contact @serra for suggestions and questions.
 
@@ -110,3 +111,4 @@ Your environment variables can be configured in the compose file or in a separat
  [Floriday]: https://www.floriday.io/en/home
  [Serra Vine]: https://vine.serraict.com
  [backlog]: ./work/backlog.md
+ [contributing]: ./CONTRIBUTING.md
