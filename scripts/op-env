@@ -1,13 +1,19 @@
 #!/usr/bin/env bash
-# Script to manage Floriday credentials using 1Password.
+# Script to manage environment variables using 1Password.
+#
+# This script reads variable names from .env.example and manages them using 1Password.
+# Only variables that exist in the specified 1Password item will be managed.
 #
 # This script must be sourced to modify environment variables:
 #
-#   Load credentials:
-#     source ./scripts/floriday-credentials load "Serra Vine" "Floriday Staging"
+#   Load variables:
+#     source ./scripts/op-env load VAULT_NAME ITEM_NAME
 #
-#   Unset credentials:
-#     source ./scripts/floriday-credentials unset "Serra Vine" "Floriday Staging"
+#   Unset variables:
+#     source ./scripts/op-env unset VAULT_NAME ITEM_NAME
+#
+# Example:
+#     source ./scripts/op-env load "My Vault" "Project Credentials"
 #
 # Note: The script will remind you if you forget to source it.
 
@@ -103,8 +109,8 @@ case "$1" in
         echo "Usage: source $0 COMMAND [ARGS]" >&2
         echo "" >&2
         echo "Commands:" >&2
-        echo "  load VAULT_NAME ITEM_NAME    Load Floriday credentials from 1Password" >&2
-        echo "  unset VAULT_NAME ITEM_NAME   Unset Floriday credentials from 1Password" >&2
+        echo "  load VAULT_NAME ITEM_NAME    Load environment variables from 1Password" >&2
+        echo "  unset VAULT_NAME ITEM_NAME   Unset environment variables from 1Password" >&2
         return 1
         ;;
 esac
