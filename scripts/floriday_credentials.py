@@ -1,22 +1,24 @@
 #!/usr/bin/env python3
 """
-Script to load Floriday credentials from a 1Password vault.
+Script to manage Floriday credentials using 1Password.
 
-This script uses the 1Password CLI (op) to fetch and set the following environment variables:
-- FLORIDAY_CLIENT_ID
-- FLORIDAY_CLIENT_SECRET
-- FLORIDAY_API_KEY
+This script provides commands to:
+1. Load credentials from a 1Password vault
+2. Unset credentials from the environment
 
 Usage:
-    eval $(./scripts/load_floriday_credentials.py VAULT_NAME)
+    # Load credentials
+    eval $(./scripts/floriday_credentials.py load "Serra Vine")
 
-Example:
-    eval $(./scripts/load_floriday_credentials.py "Serra Vine")
+    # Unset credentials
+    eval $(./scripts/floriday_credentials.py unset)
 """
-import argparse
 import subprocess
 import sys
 import json
+import typer
+
+app = typer.Typer(help="Manage Floriday credentials")
 
 
 def run_op_command(vault: str, item_name: str) -> dict:
@@ -46,8 +48,31 @@ def get_field_value(item_data: dict, field_name: str) -> str:
     sys.exit(1)
 
 
-def load_floriday_credentials(vault: str):
+def check_op_version():
+    """Check if op CLI is available with correct version."""
+    try:
+        version = subprocess.run(
+            ["op", "--version"], capture_output=True, text=True, check=True
+        )
+        if not version.stdout.startswith("2.30"):
+            print(
+                "Warning: This script was designed for op CLI version 2.30",
+                file=sys.stderr,
+            )
+    except subprocess.CalledProcessError:
+        print("Error: 1Password CLI (op) not found or not accessible", file=sys.stderr)
+        sys.exit(1)
+
+
+@app.command()
+def load(
+    vault: str = typer.Argument(
+        ..., help="Name of the 1Password vault containing Floriday credentials"
+    )
+):
     """Load Floriday credentials from 1Password and output export commands."""
+    check_op_version()
+
     # Fetch credentials from 1Password
     item_data = run_op_command(vault, "Floriday Staging")
 
@@ -63,33 +88,18 @@ def load_floriday_credentials(vault: str):
         print(f"export {env_var}='{value}'")
 
 
-def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
-        description="Load Floriday credentials from a 1Password vault"
-    )
-    parser.add_argument(
-        "vault", help="Name of the 1Password vault containing Floriday credentials"
-    )
+@app.command()
+def unset():
+    """Output commands to unset Floriday-related environment variables."""
+    variables = [
+        "FLORIDAY_CLIENT_ID",
+        "FLORIDAY_CLIENT_SECRET",
+        "FLORIDAY_API_KEY",
+    ]
 
-    args = parser.parse_args()
-
-    # Check if op CLI is available
-    try:
-        version = subprocess.run(
-            ["op", "--version"], capture_output=True, text=True, check=True
-        )
-        if not version.stdout.startswith("2.30"):
-            print(
-                "Warning: This script was designed for op CLI version 2.30",
-                file=sys.stderr,
-            )
-    except subprocess.CalledProcessError:
-        print("Error: 1Password CLI (op) not found or not accessible", file=sys.stderr)
-        sys.exit(1)
-
-    load_floriday_credentials(args.vault)
+    for var in variables:
+        print(f"unset {var}")
 
 
 if __name__ == "__main__":
-    main()
+    app()
