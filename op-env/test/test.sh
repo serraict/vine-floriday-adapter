@@ -17,37 +17,19 @@ VAULT="$1"
 ITEM="$2"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 OP_ENV="${SCRIPT_DIR}/../bin/op-env"
+TEST_DIR=$(mktemp -d)
+trap 'rm -rf "$TEST_DIR"' EXIT
 
-# Create temporary .env.example
-TEMP_ENV_EXAMPLE=$(mktemp)
-trap 'rm -f "$TEMP_ENV_EXAMPLE"' EXIT
-
+# Create test environment
 echo "Setting up test environment..."
-cat > "$TEMP_ENV_EXAMPLE" << EOL
-TEST_VAR_1=value1
-TEST_VAR_2=value2
-TEST_VAR_NOT_IN_VAULT=value3
-EOL
+cd "$TEST_DIR"
 
-# Function to run tests
-run_test() {
-    local test_name="$1"
-    local command="$2"
-    local expected_output="$3"
-    local actual_output
-    
-    echo "Running test: $test_name"
-    actual_output=$($command)
-    
-    if [[ "$actual_output" == *"$expected_output"* ]]; then
-        echo "✓ Test passed"
-    else
-        echo "✗ Test failed"
-        echo "Expected output to contain: $expected_output"
-        echo "Actual output: $actual_output"
-        exit 1
-    fi
-}
+cat > .env.example << EOL
+FLORIDAY_CLIENT_ID=your_client_id
+FLORIDAY_CLIENT_SECRET=your_client_secret
+FLORIDAY_API_KEY=your_api_key
+FLORIDAY_AUTH_URL=https://example.com
+EOL
 
 # Test direct execution (should fail)
 echo "Testing direct execution..."
@@ -59,18 +41,18 @@ else
 fi
 
 # Create a test shell to source the script
-TEST_SHELL=$(mktemp)
-trap 'rm -f "$TEST_SHELL"' EXIT
+TEST_SHELL="$TEST_DIR/test_shell.sh"
 
 # Test load command
 cat > "$TEST_SHELL" << EOL
 #!/usr/bin/env bash
+cd "$TEST_DIR"
 source "$OP_ENV" load "$VAULT" "$ITEM"
 EOL
 chmod +x "$TEST_SHELL"
 
 echo "Testing load command..."
-if output=$($TEST_SHELL) && [[ "$output" == *"Set"* ]]; then
+if output=$("$TEST_SHELL") && [[ "$output" == *"Set FLORIDAY_CLIENT_ID"* ]]; then
     echo "✓ Load test passed"
 else
     echo "✗ Load test failed"
@@ -81,11 +63,12 @@ fi
 # Test unset command
 cat > "$TEST_SHELL" << EOL
 #!/usr/bin/env bash
+cd "$TEST_DIR"
 source "$OP_ENV" unset "$VAULT" "$ITEM"
 EOL
 
 echo "Testing unset command..."
-if output=$($TEST_SHELL) && [[ "$output" == *"Unset"* ]]; then
+if output=$("$TEST_SHELL") && [[ "$output" == *"Unset FLORIDAY_CLIENT_ID"* ]]; then
     echo "✓ Unset test passed"
 else
     echo "✗ Unset test failed"
@@ -94,17 +77,22 @@ else
 fi
 
 # Test missing arguments
+echo "Testing missing arguments..."
 cat > "$TEST_SHELL" << EOL
 #!/usr/bin/env bash
+cd "$TEST_DIR"
 source "$OP_ENV" load
+if [[ "\$?" -eq 1 ]]; then
+    exit 0
+else
+    exit 1
+fi
 EOL
 
-echo "Testing missing arguments..."
-if output=$($TEST_SHELL 2>&1) && [[ "$output" == *"Both vault name and item name are required"* ]]; then
+if "$TEST_SHELL"; then
     echo "✓ Missing arguments test passed"
 else
     echo "✗ Missing arguments test failed"
-    echo "Output: $output"
     exit 1
 fi
 

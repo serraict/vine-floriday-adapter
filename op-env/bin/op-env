@@ -17,6 +17,8 @@
 #
 # Note: The script will remind you if you forget to source it.
 
+SCRIPT_NAME="op-env"
+
 check_sourced() {
     if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
         echo "Error: This script must be sourced, not executed." >&2
@@ -60,8 +62,7 @@ load_credentials() {
     local vault="$1"
     local item="$2"
     if [ -z "$vault" ] || [ -z "$item" ]; then
-        echo "Error: Both vault name and item name are required" >&2
-        echo "Usage: source $0 load VAULT_NAME ITEM_NAME" >&2
+        echo "Missing required arguments" >&2
         return 1
     fi
 
@@ -80,8 +81,7 @@ unset_credentials() {
     local vault="$1"
     local item="$2"
     if [ -z "$vault" ] || [ -z "$item" ]; then
-        echo "Error: Both vault name and item name are required" >&2
-        echo "Usage: source $0 unset VAULT_NAME ITEM_NAME" >&2
+        echo "Missing required arguments" >&2
         return 1
     fi
 
@@ -106,7 +106,7 @@ case "$1" in
         unset_credentials "$2" "$3"
         ;;
     *)
-        echo "Usage: source $0 COMMAND [ARGS]" >&2
+        echo "Usage: source $SCRIPT_NAME COMMAND [ARGS]" >&2
         echo "" >&2
         echo "Commands:" >&2
         echo "  load VAULT_NAME ITEM_NAME    Load environment variables from 1Password" >&2
