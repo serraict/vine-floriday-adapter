@@ -20,6 +20,12 @@ import typer
 
 app = typer.Typer(help="Manage Floriday credentials")
 
+FLORIDAY_VARIABLES = [
+    "FLORIDAY_CLIENT_ID",
+    "FLORIDAY_CLIENT_SECRET",
+    "FLORIDAY_API_KEY",
+]
+
 
 def run_op_command(vault: str, item_name: str) -> dict:
     """Run 1Password CLI command to get item details."""
@@ -77,27 +83,15 @@ def load(
     item_data = run_op_command(vault, "Floriday Staging")
 
     # Extract and print export commands
-    credentials = {
-        "FLORIDAY_CLIENT_ID": "CLIENT_ID",
-        "FLORIDAY_CLIENT_SECRET": "CLIENT_SECRET",
-        "FLORIDAY_API_KEY": "API_KEY",
-    }
-
-    for env_var, field_name in credentials.items():
-        value = get_field_value(item_data, field_name)
-        print(f"export {env_var}='{value}'")
+    for var in FLORIDAY_VARIABLES:
+        value = get_field_value(item_data, var)
+        print(f"export {var}='{value}'")
 
 
 @app.command()
 def unset():
     """Output commands to unset Floriday-related environment variables."""
-    variables = [
-        "FLORIDAY_CLIENT_ID",
-        "FLORIDAY_CLIENT_SECRET",
-        "FLORIDAY_API_KEY",
-    ]
-
-    for var in variables:
+    for var in FLORIDAY_VARIABLES:
         print(f"unset {var}")
 
 
