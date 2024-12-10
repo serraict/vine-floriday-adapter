@@ -2,22 +2,19 @@
 """
 Script to unset Floriday-related environment variables.
 
-This script removes the following environment variables:
+This script outputs commands to unset the following environment variables:
 - FLORIDAY_CLIENT_ID
 - FLORIDAY_CLIENT_SECRET
 - FLORIDAY_API_KEY
 
 Usage:
-    python scripts/unset_floriday_credentials.py
-    # or after making executable:
-    ./scripts/unset_floriday_credentials.py
+    eval $(./scripts/unset_floriday_credentials.py)
 """
-import os
 import sys
 
 
 def unset_floriday_credentials():
-    """Unset Floriday-related environment variables."""
+    """Output commands to unset Floriday-related environment variables."""
     variables_to_unset = [
         "FLORIDAY_CLIENT_ID",
         "FLORIDAY_CLIENT_SECRET",
@@ -25,11 +22,7 @@ def unset_floriday_credentials():
     ]
 
     for var in variables_to_unset:
-        if var in os.environ:
-            del os.environ[var]
-            print(f"Unset {var}")
-        else:
-            print(f"{var} was not set")
+        print(f"unset {var}")
 
 
 if __name__ == "__main__":

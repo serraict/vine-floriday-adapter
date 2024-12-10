@@ -8,13 +8,12 @@ This script uses the 1Password CLI (op) to fetch and set the following environme
 - FLORIDAY_API_KEY
 
 Usage:
-    ./scripts/load_floriday_credentials.py VAULT_NAME
+    eval $(./scripts/load_floriday_credentials.py VAULT_NAME)
 
 Example:
-    ./scripts/load_floriday_credentials.py Development
+    eval $(./scripts/load_floriday_credentials.py "Serra Vine")
 """
 import argparse
-import os
 import subprocess
 import sys
 import json
@@ -48,13 +47,11 @@ def get_field_value(item_data: dict, field_name: str) -> str:
 
 
 def load_floriday_credentials(vault: str):
-    """Load Floriday credentials from 1Password and set environment variables."""
-    print(f"Loading Floriday credentials from vault: {vault}")
-
+    """Load Floriday credentials from 1Password and output export commands."""
     # Fetch credentials from 1Password
     item_data = run_op_command(vault, "Floriday Staging")
 
-    # Extract and set environment variables
+    # Extract and print export commands
     credentials = {
         "FLORIDAY_CLIENT_ID": "CLIENT_ID",
         "FLORIDAY_CLIENT_SECRET": "CLIENT_SECRET",
@@ -63,8 +60,7 @@ def load_floriday_credentials(vault: str):
 
     for env_var, field_name in credentials.items():
         value = get_field_value(item_data, field_name)
-        os.environ[env_var] = value
-        print(f"Set {env_var}")
+        print(f"export {env_var}='{value}'")
 
 
 def main():
