@@ -2,78 +2,109 @@
 
 ## 1. Introduction
 
-The Vine-Floriday Adapter is a software solution designed to retrieve trade information from the Floriday platform, allowing suppliers to analyze their quotations, orders, and catalogs locally. This document outlines the high-level architecture of the system, its main components, and the technologies used.
+The Vine-Floriday Adapter is a software solution designed to
+retrieve trade information from the Floriday platform,
+allowing suppliers to analyze their quotations, orders, and catalogs locally.
+This document outlines the high-level architecture of the system,
+its main components, and the technologies used.
 
 ## 2. System Overview
 
-The system is primarily built using Python and consists of several key components that work together to fetch, process, and store data from the Floriday platform.
+The system is primarily built using Python.
+It is a command line script that queries the [Floriday Suppliers API],
+using the [Floriday Python client],
+a Python client generated from the [Floriday Suppliers API Swagger definition].
+
+The CLI can run as a standalone script, or in a Docker container suitable for Serra Vine.
+When running in Serra Vine, you can schedule the synchronization task using `cron`.
+See the `floridayvine-crontab` for an example crontab file.
 
 ## 3. Main Components
 
-### 3.1 Data Retrieval Module
+### 3.1. CLI
 
-- Located in: `src/floridayvine/floriday/`
-- Purpose: Interfaces with the Floriday API to fetch trade information.
-- Key files:
-  - `misc.py`: Contains miscellaneous functions for interacting with Floriday.
+The command line application is written in [Typer](https://typer.tiangolo.com/).
+Its entrypoint is located in `src/floridayvine/__main__.py`,
+and all sub commands are placed in `src/floridayvine/commands`.
 
-### 3.2 Data Processing Module
+### 3.2. Floriday
 
-- Located in: `src/floridayvine/`
-- Purpose: Processes and transforms the data retrieved from Floriday.
-- Key files:
-  - `__main__.py`: Entry point for the application, orchestrates the overall process.
+All components related to consuming the API are located in `src/floridayvine/floriday`.
+Entities in Floriday can be synchronized with the local datastore.
+The synchronization code (in `src/floridayvine/floriday/sync.py`) is the same for all entities.
 
-### 3.3 Persistence Module
+### 3.3. Persistence
 
-- Located in: `src/floridayvine/`
-- Purpose: Handles data storage and retrieval from the local database.
-- Key files:
-  - `persistence.py`: Manages database operations.
+Data structures are persisted locally in a MongoDB.
+We do not perform any local processing and persist the entities as received from Floriday.
 
-## 4. Data Flow
+## 4. Program Flow
 
-1. The Data Retrieval Module fetches trade information from the Floriday API.
-2. The Data Processing Module transforms and prepares the data for storage.
-3. The Persistence Module stores the processed data in the MongoDB database.
+- Check synchronization state of a local collection.
+- From the local state, initiate a synchronization with the Floriday API.
+- Repeat for any collection.
 
 ## 5. Technologies and Frameworks
 
-- **Programming Language**: Python
-- **Database**: MongoDB
-  - Chosen for its flexibility and potential integration with Dremio data lake solution.
-- **API Integration**: Custom implementation for Floriday API
-- **Containerization**: Docker (as evidenced by Dockerfile and docker-compose.yml)
-- **Version Control**: Git
+The application is developed in Python 3.12, with [Typer](https://typer.tiangolo.com/) and [PyMongo](https://pymongo.readthedocs.io/) as the most important dependencies.
+A MongoDB instance is needed for local storage.
 
 ## 6. Deployment and Execution
 
-- The application is containerized using Docker, allowing for easy deployment and scaling.
-- A cron job (`floridayvine-crontab` and `floridayvine-cronjob/`) is set up for scheduled execution of the data retrieval and processing tasks.
+We deploy the app as Docker container image `vine-floriday-adapter` to <https://ghcr.io>.
+
+```bash
+docker pull ghcr.io/serraict/vine-floriday-adapter:latest
+```
 
 ## 7. Testing
 
-- Located in: `tests/`
-- Includes unit tests for various components of the system.
-- Key test files:
-  - `test_can_run_script.py`
-  - `test_floriday.py`
+Tests are written using [PyTest](https://docs.pytest.org/).
+There are unit tests that can be run standalone,
+and integration tests that require access to a Floriday staging environment and a MongoDB instance.
+
+```bash
+make test
+make test-integration
+```
 
 ## 8. Configuration and Environment
 
 - Environment variables are used for configuration (`.env.example`).
 - Python version is managed using `.python-version`.
 
-## 9. Future Considerations
+## 9. Error Handling and Resilience
 
-- The architecture is designed to be flexible, allowing for potential integration with other data lake solutions compatible with MongoDB.
-- The modular structure allows for easy expansion to include additional data sources or processing capabilities.
+Request and database exceptions are caught and handled with context-specific error messages.
 
-## 10. Adding a New Entity for Synchronization
+## 10. Logging and Monitoring
+
+Log message are written to stdout.
+The file `/var/cron.log` is `tail`ed by the docker container,
+see `/floridayvine-crontab` for an example on how to forward your cron jobs's output to this log file.
+
+## 11. Security Considerations
+
+Credentials are not persisted on disk.
+Credentials are managed through environment variables
+
+## 12. Database Management
+
+Synchronized collections are created automatically during database initialization.
+No explicit schema validation is enforced, maintaining flexibility with API response.
+
+## 13. Future Considerations
+
+As the synchronization workflow is central to the interaction with the Floriday API,
+we should consider moving it into the client package.
+
+Describe how to securely handle secrets without writing them to disk unencrypted.
+
+## 14. Adding a New Entity for Synchronization
 
 To add synchronization for a new entity type, follow these steps:
 
-1. In `src/floridayvine/floriday/misc.py`:
+1. In `src/floridayvine/floriday/entities.py`:
    a. Create a new function for synchronizing the new entity (e.g., `sync_new_entity_type`).
    b. Define the necessary API calls using the Floriday API client.
    c. Create a persistence function for the new entity type.
@@ -82,7 +113,7 @@ To add synchronization for a new entity type, follow these steps:
 2. Example structure for adding a new entity:
 
    ```python
-   def sync_new_entity_type(start_seq_number=None, limit_result=5):
+   def sync_new_entity_type(start_seq_number=None, limit_result=50):
        api = NewEntityTypeApi(_clt)
        
        def persist_new_entity(entity):
@@ -90,9 +121,7 @@ To add synchronization for a new entity type, follow these steps:
            return entity.name
 
        sync_entities(
-           api,
            "new_entity_type",
-           api.get_new_entity_type_max_sequence,
            api.get_new_entity_type_by_sequence_number,
            persist_new_entity,
            start_seq_number,
@@ -117,6 +146,6 @@ To add synchronization for a new entity type, follow these steps:
 
 By following these steps, you can easily extend the system to synchronize new entity types while maintaining the existing architecture and leveraging the common synchronization routine.
 
-## 11. Conclusion
-
-The Vine-Floriday Adapter provides a robust solution for retrieving and locally storing trade information from the Floriday platform. Its modular architecture and use of modern technologies ensure scalability and maintainability for future enhancements.
+[Floriday Suppliers API]: https://developer.floriday.io/docs/release-notes-suppliers-api
+[Floriday Python client]: https://github.com/serraict/vine-floriday-python-supplier-api-client
+[Floriday Suppliers API Swagger definition]: https://api.staging.floriday.io/suppliers-api-2024v2/swagger/index.html

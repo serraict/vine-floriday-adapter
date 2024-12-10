@@ -2,6 +2,7 @@
 
 ## Next
 
+* Goal: handle api secrets according to <https://serra.fibery.io/Public/Learnings-by-State-80#Learning/passing-secrets-to-containerized-apps-101>
 * Goal: show open quotations for a supplier on Floriday.
   * Create a Serra Vine dashboard for open quotations
   * Monitor rate limits for the application
@@ -17,10 +18,6 @@
 * Consider implementing improvements suggested during manual testing:
   * Add more detailed logging for troubleshooting purposes
   * Implement a dry-run option for the sync command to preview changes without persisting them
-* Update documentation
-  * Review and update README.md
-  * Update CLI documentation to reflect new commands and structure
-  * Document the new module structure in software_architecture.md
 
 ## Out of Scope
 
