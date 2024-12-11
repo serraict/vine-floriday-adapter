@@ -2,7 +2,6 @@
 
 ## Next
 
-* Goal: handle api secrets according to <https://serra.fibery.io/Public/Learnings-by-State-80#Learning/passing-secrets-to-containerized-apps-101>
 * Goal: show open quotations for a supplier on Floriday.
   * Create a Serra Vine dashboard for open quotations
   * Monitor rate limits for the application
