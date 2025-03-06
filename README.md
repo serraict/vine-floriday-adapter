@@ -22,6 +22,18 @@ make update
 floridayvine --help
 ```
 
+### Authentication
+
+API Key, Client ID and Client secret can be set as environment variables.
+Better yet store them in your onepassword vault.
+
+```bash
+$ . ./scripts/load_credentials.sh
+Set FLORIDAY_CLIENT_ID
+Set FLORIDAY_CLIENT_SECRET
+Set FLORIDAY_API_KEY
+```
+
 Now you can run and debug the command line script `floridayvine`.
 
 ### Environment Variable Verification
