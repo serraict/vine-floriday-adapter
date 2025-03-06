@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - New `sync supply-lines` command to synchronize supply lines data from Floriday
 
+### Fixed
+
+- Fixed authentication issue in production environment where API client was using staging URL instead of production URL
+
 ## [0.12.4] - 2024-10-15
 
 ### Changed
