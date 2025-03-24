@@ -2,9 +2,14 @@
 
 ## Next
 
-* Goal: show open quotations for a supplier on Floriday.
-  * Create a Serra Vine dashboard for open quotations
-  * Monitor rate limits for the application
+* Update CLI interface for sync commands to use new parameters from floriday-supplier-client v0.1.6
+  * Add new options for batch_size and rate_limit_delay
+  * Improve error reporting
+  * Add progress feedback using new EntitySyncResult
+* New clis options
+  * sync last 100 items
+  * sync first 100 items
+  * use a different page number
 * Implement consistent logging throughout the application
   * Define logging standards and best practices
   * Add appropriate log levels (INFO, WARNING, ERROR, etc.)

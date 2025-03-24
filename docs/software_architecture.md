@@ -31,7 +31,8 @@ and all sub commands are placed in `src/floridayvine/commands`.
 
 All components related to consuming the API are located in `src/floridayvine/floriday`.
 Entities in Floriday can be synchronized with the local datastore.
-The synchronization code (in `src/floridayvine/floriday/sync.py`) is the same for all entities.
+The synchronization code uses the `sync_entities` function from the `floriday-supplier-client` package.
+A thin wrapper in `src/floridayvine/floriday/sync.py` maintains backward compatibility with the original API.
 
 ### 3.3. Persistence
 
@@ -114,13 +115,13 @@ To add synchronization for a new entity type, follow these steps:
 
    ```python
    def sync_new_entity_type(start_seq_number=None, limit_result=50):
-       api = NewEntityTypeApi(_clt)
+       api = NewEntityTypeApi(get_api_client())
        
        def persist_new_entity(entity):
            persist("new_entity_type", entity.id, entity.to_dict())
            return entity.name
 
-       sync_entities(
+       return sync_entities(
            "new_entity_type",
            api.get_new_entity_type_by_sequence_number,
            persist_new_entity,
@@ -129,7 +130,10 @@ To add synchronization for a new entity type, follow these steps:
        )
    ```
 
-   Note: The `start_seq_number` parameter now defaults to `None`. The `sync_entities` function will use the maximum sequence number from the database if `start_seq_number` is not provided.
+   Note: 
+   - The `start_seq_number` parameter defaults to `None`. The `sync_entities` function will use the maximum sequence number from the database if `start_seq_number` is not provided.
+   - The function returns the result of the sync operation, which includes statistics about the synchronization process.
+   - Additional parameters like `rate_limit_delay` can be added to control the synchronization behavior.
 
 3. In `src/floridayvine/commands/floriday.py`:
    a. Add a new command to trigger the synchronization of the new entity type.
