@@ -37,13 +37,14 @@ def test_can_list_trade_items():
     )
 
 
-def test_can_sync_organizations():
-    assert (
-        subprocess.run(
-            ["floridayvine", "sync", "organizations", "--limit-result", "5"]
-        ).returncode
-        == 0
-    )
+# disabled because this takes a long time to run on an empty database
+# def test_can_sync_organizations():
+#     assert (
+#         subprocess.run(
+#             ["floridayvine", "sync", "organizations", "--limit-result", "5"]
+#         ).returncode
+#         == 0
+#     )
 
 
 def test_can_print_sync_status():

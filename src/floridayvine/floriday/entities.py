@@ -11,7 +11,7 @@ def sync_organizations(start_seq_number=None, limit_result=50):
         persist("organizations", org.organization_id, org.to_dict())
         return org.name
 
-    sync_entities(
+    return sync_entities(
         "organizations",
         api.get_organizations_by_sequence_number,
         persist_org,
@@ -33,7 +33,7 @@ def sync_trade_items(start_seq_number=None, limit_result=50):
         persist("trade_items", item.trade_item_id, item.to_dict())
         return item.trade_item_name
 
-    sync_entities(
+    return sync_entities(
         "trade_items",
         api.get_trade_items_by_sequence_number,
         persist_item,
@@ -55,7 +55,7 @@ def sync_supply_lines(start_seq_number=None, limit_result=50):
         persist("supply_lines", supply_line.supply_line_id, supply_line.to_dict())
         return supply_line.supply_line_id
 
-    sync_entities(
+    return sync_entities(
         "supply_lines",
         api.get_supply_lines_by_sequence_number,
         persist_supply_line,
