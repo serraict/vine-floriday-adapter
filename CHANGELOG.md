@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to floriday-supplier-client v0.1.6
 - Improved sync module with better error handling and configurable rate limiting
 - Sync functions now return sync results
+- Added documentation for running integration tests
 
 ## [0.12.6] - 2025-03-06
 

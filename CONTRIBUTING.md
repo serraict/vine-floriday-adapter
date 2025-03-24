@@ -35,6 +35,12 @@ Our integration tests require access to a local database and a Floriday staging 
 These tests ensure our application works end-to-end.
 These tests as of now are not part of our CI job and need to be executed manually before creating a release.
 
+To run integration tests:
+
+1. Load the required credentials: `source scripts/load_credentials.sh`
+2. Verify connectivity: `floridayvine about` (this checks database and API connectivity)
+3. Run the tests: `make test-integration`
+
 Measure: `make test-integration`
 
 ## Documentation
