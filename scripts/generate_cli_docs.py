@@ -30,9 +30,13 @@ def generate_documentation():
             commands_section = True
             continue
         if commands_section and "│" in line:
-            command = line.split("│")[1].strip().split()[0]
-            if command:
-                commands.append(command)
+            # Extract the command name, handling multi-line descriptions
+            parts = line.split("│")[1].strip().split(maxsplit=1)
+            if parts:
+                command = parts[0]
+                # Skip if it's a continuation of a description (no command)
+                if command and not command.startswith(" "):
+                    commands.append(command)
         if commands_section and "╰" in line:
             break
 
