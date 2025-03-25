@@ -2,6 +2,7 @@
 
 ## Next
 
+* about command should check if it is using the correct base url
 * Update CLI interface for sync commands to use new parameters from floriday-supplier-client v0.1.6
   * Add new options for batch_size and rate_limit_delay
   * Improve error reporting
