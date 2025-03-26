@@ -7,7 +7,8 @@ from ..persistence import (
     mongodb_connection_string,
     check_database_status,
 )
-from ..floriday.auth import get_auth_info
+from ..floriday.auth import get_auth_info, BASE_URL
+from ..floriday.api_client import get_api_client
 
 app = typer.Typer(
     invoke_without_command=True,
@@ -17,6 +18,20 @@ app = typer.Typer(
 
 def get_version():
     return get_package_version("floridayvine")
+
+
+def check_api_version():
+    """
+    Check if the API version in the base URL matches the expected version.
+
+    Returns:
+        None if the version is correct, or an error message if there's a mismatch.
+    """
+    try:
+        get_api_client()
+        return None
+    except ValueError as e:
+        return str(e)
 
 
 def check_database_connection():
@@ -71,6 +86,19 @@ def show_info():
     print(check_database_connection())
 
     print("\nFloriday Connection Status:")
+
+    # Display the base URL
+    if not BASE_URL:
+        print("WARNING: FLORIDAY_BASE_URL environment variable is not set.")
+    else:
+        print(f"Using Floriday API base URL: {BASE_URL}")
+
+    # Check API version
+    version_error = check_api_version()
+    if version_error:
+        print("WARNING: API version mismatch detected!")
+        print(version_error)
+
     try:
         orgs = get_auth_info()
         print("Successfully connected to Floriday.")
