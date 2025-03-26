@@ -2,7 +2,6 @@
 
 ## Next
 
-* about command should check if it is using the correct base url (like in the test)
 * add CustomerOffers
 * add contracts
 * Update CLI interface for sync commands to use new parameters from floriday-supplier-client v0.1.6
