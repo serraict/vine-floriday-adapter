@@ -11,7 +11,7 @@ def check_connections():
 
     output = result.stdout
     assert (
-        "Successfully connected to Floriday." in output
+        "Successfully authorized with Floriday." in output
     ), "Failed to connect to Floriday"
     assert (
         "Successfully connected to the database" in output

@@ -82,8 +82,7 @@ def show_info():
     )
     print(f"Version: {get_version()}")
 
-    print("\nDatabase Connection Status:")
-    print(check_database_connection())
+    print(f"\n{check_database_connection()}")
 
     print("\nFloriday Connection Status:")
 
@@ -93,21 +92,20 @@ def show_info():
     else:
         print(f"Using Floriday API base URL: {BASE_URL}")
 
+    try:
+        orgs = get_auth_info()
+        print("Successfully authorized with Floriday.")
+        pprint(orgs, indent=4)
+    except Exception as e:
+        print(f"Failed to authorize with Floriday. Error: {str(e)}")
+        print("For troubleshooting, please refer to the project documentation:")
+        print("https://github.com/serraict/vine-floriday-adapter#readme")
+
     # Check API version
     version_error = check_api_version()
     if version_error:
-        print("WARNING: API version mismatch detected!")
+        print("\n*** WARNING: API version mismatch detected! ***\n")
         print(version_error)
-
-    try:
-        orgs = get_auth_info()
-        print("Successfully connected to Floriday.")
-        print("Organizations:")
-        pprint(orgs)
-    except Exception as e:
-        print(f"Failed to connect to Floriday. Error: {str(e)}")
-        print("For troubleshooting, please refer to the project documentation:")
-        print("https://github.com/serraict/vine-floriday-adapter#readme")
 
 
 if __name__ == "__main__":
