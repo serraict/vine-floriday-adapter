@@ -2,41 +2,57 @@
 
 ## Goal
 
-Add API version validation to the about command to warn users when their FLORIDAY_BASE_URL environment variable points to an incorrect API version.
+Add customer orders to the synced entities, following the existing patterns for entity synchronization.
 
 ## Analysis
 
-The Floriday API client already has version validation built in through the `_validate_api_version()` method in the ApiFactory class. When the base URL points to a different version than what the client expects, it raises a ValueError with a helpful message.
+The application currently syncs organizations, trade items, and supply lines using a consistent pattern:
 
-Currently, this validation only happens when commands try to use the API client, leading to errors in various commands. We should surface this validation in the about command to help users identify and fix configuration issues early.
+1. Entity sync functions in entities.py
+2. CLI commands in sync.py
+3. Persistence through MongoDB
+
+We'll follow this pattern to add customer orders synchronization.
 
 ## Design
 
-Add a new function `check_api_version()` to about.py that:
-1. Attempts to initialize the API client (which triggers version validation)
-2. Returns None if version is correct
-3. Returns the error message if there's a version mismatch
-
-Update the show_info function to:
-1. Call check_api_version() before attempting to connect to Floriday
-2. Display the base URL being used
-3. Show a warning if API version doesn't match
-4. Continue with regular connection status checks
+```mermaid
+graph LR
+    CLI[CLI Command] --> Entities[Entities Layer]
+    Entities --> Sync[Sync Module]
+    Entities --> ApiClient[API Client]
+    Entities --> Persistence[Persistence Layer]
+    ApiClient --> Floriday[Floriday API]
+    Persistence --> MongoDB[MongoDB]
+```
 
 ## Steps
 
 After each step, make sure there is a test for any changed functionality and commit our work.
 
-1. Add check_api_version function to about.py
-2. Update show_info to use check_api_version
-3. Test with both correct and incorrect base URL values
-4. Update tests if needed
-5. Review the about command's output
+Step 1: Core Entity Sync
 
-## Progress
+- [ ] Add tests in tests/test_entities.py for customer order sync functionality
+- [ ] Add customer orders section in docs/cli_documentation.md
+- [ ] Add customer orders sync in src/floridayvine/floriday/entities.py
 
-- [x] Add check_api_version function
-- [x] Update show_info function
-- [x] Test with incorrect base URL
-- [x] Test with correct base URL
-- [x] Update tests if needed
+Step 2: CLI Integration
+
+- [ ] Add tests in tests/test_sync.py for CLI command
+- [ ] Update CHANGELOG.md with new feature
+- [ ] Add customer_orders command in src/floridayvine/commands/sync.py
+
+Step 3: Integration Testing
+
+- [ ] Add integration test scenarios in tests/manual_testing_plan.md
+- [ ] Update software architecture documentation if needed
+- [ ] Add test data and verify end-to-end functionality
+
+## Quality Assurance
+
+Before considering this complete:
+
+- [ ] Run make quality for linting and formatting
+- [ ] Run make test for unit tests
+- [ ] Run integration tests following CONTRIBUTING.md guidelines
+- [ ] Manual verification of the sync functionality
