@@ -1,4 +1,9 @@
-from floriday_supplier_client import TradeItemsApi, DirectSalesApi, OrganizationsApi
+from floriday_supplier_client import (
+    TradeItemsApi,
+    DirectSalesApi,
+    OrganizationsApi,
+    CustomerOffersApi,
+)
 from .api_client import get_api_client
 from .sync import sync_entities
 from ..persistence import persist
@@ -59,6 +64,32 @@ def sync_supply_lines(start_seq_number=None, limit_result=50):
         "supply_lines",
         api.get_supply_lines_by_sequence_number,
         persist_supply_line,
+        start_seq_number,
+        limit_result,
+    )
+
+
+def sync_customer_offers(start_seq_number=None, limit_result=50):
+    """
+    Synchronize customer offers data from Floriday.
+
+    Args:
+        start_seq_number: Optional starting sequence number
+        limit_result: Number of entities to fetch per batch
+
+    Returns:
+        Dictionary with sync statistics
+    """
+    api = CustomerOffersApi(get_api_client())
+
+    def persist_offer(offer):
+        persist("customer_offers", offer.offer_id, offer.to_dict())
+        return offer.offer_number
+
+    return sync_entities(
+        "customer_offers",
+        api.get_customer_offers_by_sequence_number,
+        persist_offer,
         start_seq_number,
         limit_result,
     )

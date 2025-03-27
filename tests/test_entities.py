@@ -5,6 +5,7 @@ from floridayvine.floriday.entities import (
     sync_trade_items,
     get_direct_sales,
     sync_supply_lines,
+    sync_customer_offers,
 )
 
 
@@ -135,3 +136,37 @@ def test_sync_supply_lines(
             "supply_lines", "789", {"id": "789", "name": "Test Supply Line"}
         )
         assert result == "789"
+
+
+@patch("floridayvine.floriday.entities.CustomerOffersApi")
+@patch("floridayvine.floriday.entities.get_api_client")
+@patch("floridayvine.floriday.entities.sync_entities")
+def test_sync_customer_offers(
+    mock_sync_entities, mock_get_api_client, mock_customer_offers_api
+):
+    mock_api = MagicMock()
+    mock_customer_offers_api.return_value = mock_api
+
+    sync_customer_offers(start_seq_number=400, limit_result=40)
+
+    mock_sync_entities.assert_called_once_with(
+        "customer_offers",
+        mock_api.get_customer_offers_by_sequence_number,
+        mock_sync_entities.call_args[0][2],  # This is the persist_offer function
+        400,
+        40,
+    )
+
+    # Test the persist_offer function
+    mock_offer = MagicMock()
+    mock_offer.offer_id = "101112"
+    mock_offer.offer_number = "OFF-12345"
+    mock_offer.to_dict.return_value = {"id": "101112", "offer_number": "OFF-12345"}
+
+    persist_offer = mock_sync_entities.call_args[0][2]
+    with patch("floridayvine.floriday.entities.persist") as mock_persist:
+        result = persist_offer(mock_offer)
+        mock_persist.assert_called_once_with(
+            "customer_offers", "101112", {"id": "101112", "offer_number": "OFF-12345"}
+        )
+        assert result == "OFF-12345"

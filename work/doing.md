@@ -32,15 +32,15 @@ After each step, make sure there is a test for any changed functionality and com
 
 Step 1: Core Entity Sync
 
-- [ ] Add tests in tests/test_entities.py for customer order sync functionality
-- [ ] Add customer orders section in docs/cli_documentation.md
-- [ ] Add customer orders sync in src/floridayvine/floriday/entities.py
+- [x] Add tests in tests/test_entities.py for customer offers sync functionality
+- [x] Add customer offers section in docs/cli_documentation.md
+- [x] Add customer offers sync in src/floridayvine/floriday/entities.py
 
 Step 2: CLI Integration
 
 - [ ] Add tests in tests/test_sync.py for CLI command
 - [ ] Update CHANGELOG.md with new feature
-- [ ] Add customer_orders command in src/floridayvine/commands/sync.py
+- [ ] Add customer_offers command in src/floridayvine/commands/sync.py
 
 Step 3: Integration Testing
 
@@ -56,3 +56,10 @@ Before considering this complete:
 - [ ] Run make test for unit tests
 - [ ] Run integration tests following CONTRIBUTING.md guidelines
 - [ ] Manual verification of the sync functionality
+
+## Retrospective
+
+How did this implementation go? Anything we can improve?
+If we were to create a guideline for adding another entity to sync, what definitely should be in there?
+What can we leave out safely?
+What would the outline for such a guide be?
