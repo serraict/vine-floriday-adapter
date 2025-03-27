@@ -62,7 +62,62 @@ Before considering this complete:
 
 ## Retrospective
 
-How did this implementation go? Anything we can improve?
-If we were to create a guideline for adding another entity to sync, what definitely should be in there?
-What can we leave out safely?
-What would the outline for such a guide be?
+The implementation of customer offers sync went smoothly by following the existing patterns in the codebase. Here's a reflection on the process:
+
+### What Went Well
+
+- Following the established pattern made it straightforward to add a new entity
+- Test-driven development approach ensured functionality worked as expected
+- The existing architecture documentation provided clear guidance
+- Integration tests verified the end-to-end functionality
+
+### Improvements for Next Time
+
+- Consider automating more of the integration testing process
+- Add a command to list customer offers similar to the existing inventory commands
+- Update the database initialization script to automatically include new collections
+
+### Guide for Adding a New Entity to Sync
+
+Based on this implementation, here's a step-by-step guide for adding another entity:
+
+1. **Core Entity Sync**
+   - Add tests for the new entity sync functionality
+   - Add the entity sync function in `src/floridayvine/floriday/entities.py`
+   - Follow the pattern of existing sync functions:
+
+     ```python
+     def sync_new_entity(start_seq_number=None, limit_result=50):
+         api = NewEntityApi(get_api_client())
+         
+         def persist_entity(entity):
+             persist("new_entity", entity.entity_id, entity.to_dict())
+             return entity.name_or_id
+         
+         return sync_entities(
+             "new_entity",
+             api.get_new_entity_by_sequence_number,
+             persist_entity,
+             start_seq_number,
+             limit_result,
+         )
+     ```
+
+2. **CLI Integration**
+   - Add tests for the CLI command
+   - Add the command in `src/floridayvine/commands/sync.py`
+   - Update CLI documentation
+
+3. **Database Integration**
+   - Add the entity to `SYNC_COLLECTIONS` in `src/floridayvine/persistence.py`
+   - This ensures the collection is created during database initialization
+
+4. **Integration Testing**
+   - Add integration tests for the new entity
+   - Verify end-to-end functionality
+
+5. **Documentation**
+   - Update CHANGELOG.md with the new feature
+   - Update any relevant documentation
+
+This guide should make it easier to add new entities in the future while maintaining consistency across the codebase.
