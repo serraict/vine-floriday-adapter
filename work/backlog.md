@@ -2,7 +2,6 @@
 
 ## Next
 
-* add CustomerOffers
 * add contracts
 * Update CLI interface for sync commands to use new parameters from floriday-supplier-client v0.1.6
   * Add new options for batch_size and rate_limit_delay
