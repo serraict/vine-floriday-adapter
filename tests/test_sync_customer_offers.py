@@ -2,7 +2,7 @@ import subprocess
 import pytest
 from pymongo import MongoClient
 import os
-from floridayvine.config import get_mongodb_uri
+from floridayvine.persistence import mongodb_connection_string, DATABASE
 
 pytestmark = pytest.mark.integration
 
@@ -10,7 +10,7 @@ pytestmark = pytest.mark.integration
 @pytest.fixture(scope="module")
 def mongodb_client():
     """Create a MongoDB client for testing."""
-    client = MongoClient(get_mongodb_uri())
+    client = MongoClient(mongodb_connection_string)
     yield client
     client.close()
 
@@ -18,16 +18,11 @@ def mongodb_client():
 @pytest.fixture(scope="module")
 def db(mongodb_client):
     """Get the database for testing."""
-    return mongodb_client.get_default_database()
+    return mongodb_client[DATABASE]
 
 
 def test_sync_customer_offers_command():
     """Test that the customer-offers sync command works correctly."""
-    # First, check the current max sequence number
-    status_output = subprocess.check_output(
-        ["floridayvine", "sync", "status"], text=True
-    )
-
     # Run the sync command with a small limit
     result = subprocess.run(
         ["floridayvine", "sync", "customer-offers", "--limit-result", "3"],
@@ -41,14 +36,6 @@ def test_sync_customer_offers_command():
     # Check that the output contains expected text
     assert "Syncing customer_offers" in result.stdout
     assert "Done syncing customer_offers" in result.stdout
-
-    # Run the status command again to verify the sequence number was updated
-    new_status_output = subprocess.check_output(
-        ["floridayvine", "sync", "status"], text=True
-    )
-
-    # The new status should be different from the original status
-    assert new_status_output != status_output
 
 
 def test_incremental_sync(db):

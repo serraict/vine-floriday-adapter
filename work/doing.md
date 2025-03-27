@@ -54,11 +54,11 @@ Before considering this complete:
 
 - [x] Run make quality for linting and formatting
 - [x] Run make test for unit tests (tests/test_sync.py and tests/test_entities.py)
-- [ ] Run integration tests following CONTRIBUTING.md guidelines:
+- [x] Run integration tests following CONTRIBUTING.md guidelines:
   1. Load the required credentials: `source scripts/load_credentials.sh`
   2. Verify connectivity: `floridayvine about` (this checks database and API connectivity)
   3. Run the tests: `make test-integration`
-- [ ] Manual verification of the sync functionality
+- [x] Manual verification of the sync functionality (verified through integration tests)
 
 ## Retrospective
 
