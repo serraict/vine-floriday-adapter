@@ -160,16 +160,18 @@ def test_print_sync_status_with_sequence_numbers():
         "floridayvine.persistence.mongodb_connection_string", "mock_connection_string"
     ):
         with patch("floridayvine.persistence.get_max_sequence_number") as mock_get_max:
-            mock_get_max.side_effect = [10, 20, 30]
+            # Create a side_effect list with a value for each collection
+            mock_get_max.side_effect = [10, 20, 30, 40][: len(SYNC_COLLECTIONS)]
             with patch("builtins.print") as mock_print:
                 print_sync_status()
-                mock_print.assert_has_calls(
-                    [
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[0]}: 10"),
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[1]}: 20"),
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[2]}: 30"),
-                    ]
-                )
+                # Create expected calls dynamically based on SYNC_COLLECTIONS
+                expected_calls = [
+                    call(f"Max sequence number for {collection}: {seq}")
+                    for collection, seq in zip(
+                        SYNC_COLLECTIONS, [10, 20, 30, 40][: len(SYNC_COLLECTIONS)]
+                    )
+                ]
+                mock_print.assert_has_calls(expected_calls)
 
 
 def test_print_sync_status_some_collections_empty():
@@ -177,16 +179,22 @@ def test_print_sync_status_some_collections_empty():
         "floridayvine.persistence.mongodb_connection_string", "mock_connection_string"
     ):
         with patch("floridayvine.persistence.get_max_sequence_number") as mock_get_max:
-            mock_get_max.side_effect = [10, 0, 30]
+            # Create a side_effect list with some zeros
+            side_effects = []
+            for i in range(len(SYNC_COLLECTIONS)):
+                if i % 2 == 0:
+                    side_effects.append(10 * (i + 1))
+                else:
+                    side_effects.append(0)
+            mock_get_max.side_effect = side_effects
             with patch("builtins.print") as mock_print:
                 print_sync_status()
-                mock_print.assert_has_calls(
-                    [
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[0]}: 10"),
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[1]}: 0"),
-                        call(f"Max sequence number for {SYNC_COLLECTIONS[2]}: 30"),
-                    ]
-                )
+                # Create expected calls dynamically based on SYNC_COLLECTIONS
+                expected_calls = [
+                    call(f"Max sequence number for {collection}: {seq}")
+                    for collection, seq in zip(SYNC_COLLECTIONS, side_effects)
+                ]
+                mock_print.assert_has_calls(expected_calls)
 
 
 def test_persist_no_connection_string():
