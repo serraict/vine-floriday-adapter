@@ -44,9 +44,9 @@ Step 2: CLI Integration
 
 Step 3: Integration Testing
 
-- [ ] Add integration test scenarios in tests/manual_testing_plan.md
-- [ ] Update software architecture documentation if needed
-- [ ] Add test data and verify end-to-end functionality
+- [x] Add integration test in tests/test_sync_customer_offers.py
+- [x] Update persistence.py to include customer_offers in SYNC_COLLECTIONS
+- [x] No need to update software architecture documentation as it already provides a general pattern
 
 ## Quality Assurance
 
