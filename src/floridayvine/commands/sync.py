@@ -1,5 +1,10 @@
 import typer
-from ..floriday.entities import sync_organizations, sync_trade_items, sync_supply_lines
+from ..floriday.entities import (
+    sync_organizations,
+    sync_trade_items,
+    sync_supply_lines,
+    sync_customer_offers,
+)
 from ..persistence import print_sync_status as persistence_print_sync_status
 
 
@@ -36,3 +41,11 @@ def supply_lines(start_seq_number: int = None, limit_result: int = 5):
     Synchronize supply lines data from Floriday.
     """
     sync_supply_lines(start_seq_number, limit_result)
+
+
+@app.command()
+def customer_offers(start_seq_number: int = None, limit_result: int = 5):
+    """
+    Synchronize customer offers data from Floriday.
+    """
+    sync_customer_offers(start_seq_number, limit_result)

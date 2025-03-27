@@ -38,9 +38,9 @@ Step 1: Core Entity Sync
 
 Step 2: CLI Integration
 
-- [ ] Add tests in tests/test_sync.py for CLI command
-- [ ] Update CHANGELOG.md with new feature
-- [ ] Add customer_offers command in src/floridayvine/commands/sync.py
+- [x] Add tests in tests/test_sync.py for CLI command
+- [x] Update CHANGELOG.md with new feature
+- [x] Add customer_offers command in src/floridayvine/commands/sync.py
 
 Step 3: Integration Testing
 
