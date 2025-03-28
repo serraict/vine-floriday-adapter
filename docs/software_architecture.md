@@ -106,20 +106,37 @@ Describe how to securely handle secrets without writing them to disk unencrypted
 To add synchronization for a new entity type, follow these steps:
 
 1. In `src/floridayvine/floriday/entities.py`:
-   a. Create a new function for synchronizing the new entity (e.g., `sync_new_entity_type`).
-   b. Define the necessary API calls using the Floriday API client.
-   c. Create a persistence function for the new entity type.
-   d. Call the `sync_entities` function with the appropriate parameters.
+   a. Import the model class from the Floriday client package to use for type hints.
+   b. Create a new function for synchronizing the new entity with proper type hints.
+   c. Define the necessary API calls using the Floriday API client.
+   d. Create a persistence function for the new entity type.
+   e. Call the `sync_entities` function with the appropriate parameters.
 
 2. Example structure for adding a new entity:
 
    ```python
-   def sync_new_entity_type(start_seq_number=None, limit_result=50):
+   from floriday_supplier_client.models.new_entity_type import NewEntityType
+   from typing import Dict, Optional, Any
+   
+   def sync_new_entity_type(start_seq_number: Optional[int] = None, limit_result: int = 50) -> Dict[str, Any]:
+       """
+       Synchronize new entity type data from Floriday.
+       
+       Args:
+           start_seq_number: Optional starting sequence number
+           limit_result: Number of entities to fetch per batch
+           
+       Returns:
+           Dictionary with sync statistics
+       """
        api = NewEntityTypeApi(get_api_client())
        
-       def persist_new_entity(entity):
-           persist("new_entity_type", entity.id, entity.to_dict())
-           return entity.name
+       def persist_new_entity(entity: NewEntityType) -> str:
+           # Use IDE autocomplete to discover the correct property names
+           # Check the model definition in floriday_supplier_client/models/
+           persist("new_entity_type", entity.new_entity_type_id, entity.to_dict())
+           # Return the ID for consistency
+           return entity.new_entity_type_id
 
        return sync_entities(
            "new_entity_type",
@@ -131,16 +148,58 @@ To add synchronization for a new entity type, follow these steps:
    ```
 
    Note: 
+   - Use type hints to improve IDE support and catch errors early.
    - The `start_seq_number` parameter defaults to `None`. The `sync_entities` function will use the maximum sequence number from the database if `start_seq_number` is not provided.
    - The function returns the result of the sync operation, which includes statistics about the synchronization process.
    - Additional parameters like `rate_limit_delay` can be added to control the synchronization behavior.
+   - Always check the model definition in the Floriday client package to ensure you're using the correct property names.
 
 3. In `src/floridayvine/commands/floriday.py`:
    a. Add a new command to trigger the synchronization of the new entity type.
 
 4. Update the main application entry point (`src/floridayvine/__main__.py`) to include the new command if necessary.
 
-5. Add appropriate unit tests in the `tests/` directory to cover the new functionality.
+5. Add appropriate unit tests in the `tests/` directory to cover the new functionality:
+   a. Test the sync function with proper mocking.
+   b. Ensure the test uses the correct property names from the API model.
+   c. Mock the entity with the same properties as the actual API model.
+   d. Example test structure:
+
+   ```python
+   @patch("floridayvine.floriday.entities.NewEntityTypeApi")
+   @patch("floridayvine.floriday.entities.get_api_client")
+   @patch("floridayvine.floriday.entities.sync_entities")
+   def test_sync_new_entity_type(
+       mock_sync_entities, mock_get_api_client, mock_new_entity_type_api
+   ):
+       mock_api = MagicMock()
+       mock_new_entity_type_api.return_value = mock_api
+
+       sync_new_entity_type(start_seq_number=100, limit_result=25)
+
+       mock_sync_entities.assert_called_once_with(
+           "new_entity_type",
+           mock_api.get_new_entity_type_by_sequence_number,
+           mock_sync_entities.call_args[0][2],  # This is the persist function
+           100,
+           25,
+       )
+
+       # Test the persist function
+       mock_entity = MagicMock()
+       # Use the correct property names from the API model
+       mock_entity.new_entity_type_id = "123"
+       mock_entity.to_dict.return_value = {"new_entity_type_id": "123", "name": "Test Entity"}
+
+       persist_function = mock_sync_entities.call_args[0][2]
+       with patch("floridayvine.floriday.entities.persist") as mock_persist:
+           result = persist_function(mock_entity)
+           mock_persist.assert_called_once_with(
+               "new_entity_type", "123", {"new_entity_type_id": "123", "name": "Test Entity"}
+           )
+           # Return ID for consistency
+           assert result == "123"
+   ```
 
 6. Update documentation, including this architecture document, to reflect the addition of the new entity type.
 

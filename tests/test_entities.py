@@ -159,14 +159,18 @@ def test_sync_customer_offers(
 
     # Test the persist_offer function
     mock_offer = MagicMock()
-    mock_offer.offer_id = "101112"
-    mock_offer.offer_number = "OFF-12345"
-    mock_offer.to_dict.return_value = {"id": "101112", "offer_number": "OFF-12345"}
+    mock_offer.customer_offer_id = "101112"  # Use correct property name from API model
+    mock_offer.to_dict.return_value = {
+        "customer_offer_id": "101112",
+        "title": "Test Offer",
+    }
 
     persist_offer = mock_sync_entities.call_args[0][2]
     with patch("floridayvine.floriday.entities.persist") as mock_persist:
         result = persist_offer(mock_offer)
         mock_persist.assert_called_once_with(
-            "customer_offers", "101112", {"id": "101112", "offer_number": "OFF-12345"}
+            "customer_offers",
+            "101112",
+            {"customer_offer_id": "101112", "title": "Test Offer"},
         )
-        assert result == "OFF-12345"
+        assert result == "101112"  # Return ID for consistency

@@ -63,6 +63,11 @@ mongodb_bg:
 stop_mongodb:
 	docker compose -f mongodb-docker-compose.yml down
 
+format:
+	@echo "Formatting code with black..."
+	black src tests
+	@echo "Code formatting completed."
+
 quality:
 	@echo "Running code quality checks..."
 	flake8 src tests

@@ -4,6 +4,8 @@ from floriday_supplier_client import (
     OrganizationsApi,
     CustomerOffersApi,
 )
+from floriday_supplier_client.models.customer_offer import CustomerOffer
+from typing import Dict, Optional, Any
 from .api_client import get_api_client
 from .sync import sync_entities
 from ..persistence import persist
@@ -69,7 +71,9 @@ def sync_supply_lines(start_seq_number=None, limit_result=50):
     )
 
 
-def sync_customer_offers(start_seq_number=None, limit_result=50):
+def sync_customer_offers(
+    start_seq_number: Optional[int] = None, limit_result: int = 50
+) -> Dict[str, Any]:
     """
     Synchronize customer offers data from Floriday.
 
@@ -82,9 +86,9 @@ def sync_customer_offers(start_seq_number=None, limit_result=50):
     """
     api = CustomerOffersApi(get_api_client())
 
-    def persist_offer(offer):
-        persist("customer_offers", offer.offer_id, offer.to_dict())
-        return offer.offer_number
+    def persist_offer(offer: CustomerOffer) -> str:
+        persist("customer_offers", offer.customer_offer_id, offer.to_dict())
+        return offer.customer_offer_id
 
     return sync_entities(
         "customer_offers",
