@@ -10,7 +10,7 @@ urls = { "project" = "https://github.com/serraict/vine-floriday-adapter", "docs"
 dependencies = [
     "typer",
     "requests",
-    "floriday-supplier-client>=0.2.3",
+    "floriday-supplier-client>=0.3.0",
     "pymongo",
 ]
 dynamic = ["version"]
