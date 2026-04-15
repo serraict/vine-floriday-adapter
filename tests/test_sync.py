@@ -2,7 +2,6 @@ from unittest.mock import patch
 from typer.testing import CliRunner
 from floridayvine.commands.sync import app
 
-
 runner = CliRunner()
 
 

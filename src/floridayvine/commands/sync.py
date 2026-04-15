@@ -7,7 +7,6 @@ from ..floriday.entities import (
 )
 from ..persistence import print_sync_status as persistence_print_sync_status
 
-
 app = typer.Typer(help="Synchronize collections in the local database with Floriday.")
 
 
