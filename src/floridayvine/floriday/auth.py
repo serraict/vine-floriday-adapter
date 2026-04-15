@@ -40,7 +40,7 @@ def get_access_token():
 def get_auth_info():
     try:
         access_token = get_access_token()
-        url = f"{BASE_URL}/auth/key"
+        url = f"{BASE_URL}/identities"
 
         headers = {
             "X-Api-Key": API_KEY,

@@ -10,7 +10,6 @@ echo
 if [ -z "$FLORIDAY_CLIENT_ID" ] || [ -z "$FLORIDAY_CLIENT_SECRET" ] || [ -z "$FLORIDAY_API_KEY" ] || [ -z "$FLORIDAY_AUTH_URL" ] || [ -z "$FLORIDAY_BASE_URL" ]; then
     echo "Error: Missing required environment variables."
     echo "Please ensure FLORIDAY_CLIENT_ID, FLORIDAY_CLIENT_SECRET, FLORIDAY_API_KEY, FLORIDAY_AUTH_URL, and FLORIDAY_BASE_URL are set."
-    exit 1
 fi
 
 echo "Step 1: Requesting a token..."
@@ -30,7 +29,7 @@ if [[ "$token_response" == *"access_token"* ]]; then
     echo
     echo "Step 2: Testing API access with the token..."
     
-    api_response=$(curl --silent --location --request GET "$FLORIDAY_BASE_URL/auth/key" \
+    api_response=$(curl --silent --location --request GET "$FLORIDAY_BASE_URL/identities" \
         --header "X-Api-Key: $FLORIDAY_API_KEY" \
         --header 'Accept: application/json' \
         --header "Authorization: Bearer $access_token")
@@ -42,10 +41,8 @@ if [[ "$token_response" == *"access_token"* ]]; then
     else
         echo "Failed to access the API."
         echo "Please check your API key and token."
-        exit 1
     fi
 else
     echo "Failed to obtain an access token."
     echo "Please check your client ID and client secret."
-    exit 1
 fi

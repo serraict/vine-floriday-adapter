@@ -92,7 +92,7 @@ With the returned access token try to GET all organization belonging to the acco
 **For suppliers**:
 
 ```shell
-curl --location --request GET 'https://api.staging.floriday.io/suppliers-api-{version}/auth/key' \
+curl --location --request GET 'https://api.staging.floriday.io/suppliers-api-{version}/identities' \
 --header 'X-Api-Key: ##API_KEY##' \
 --header 'Accept: application/json' \
 --header 'Authorization: Bearer ##ACCESS_TOKEN##
