@@ -211,4 +211,4 @@ By following these steps, you can easily extend the system to synchronize new en
 
 [Floriday Suppliers API]: https://developer.floriday.io/docs/release-notes-suppliers-api
 [Floriday Python client]: https://github.com/serraict/vine-floriday-python-supplier-api-client
-[Floriday Suppliers API Swagger definition]: https://api.staging.floriday.io/suppliers-api-2024v2/swagger/index.html
+[Floriday Suppliers API Swagger definition]: https://api.staging.floriday.io/suppliers-api-2026v1/swagger/index.html
