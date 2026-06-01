@@ -32,6 +32,12 @@ def check_api_version():
         return None
     except ValueError as e:
         return str(e)
+    except Exception:
+        # ApiFactory authenticates eagerly in its constructor, so auth/network
+        # failures surface here too. Those are reported separately by
+        # get_auth_info(); the version check (ValueError) runs before
+        # authentication, so a real version mismatch is still caught above.
+        return None
 
 
 def check_database_connection():

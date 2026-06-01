@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- `floridayvine about` no longer crashes when Floriday authentication fails
+  (e.g. with placeholder credentials in CI). `ApiFactory` in
+  floriday-supplier-client 0.4.0 authenticates eagerly in its constructor, so
+  `check_api_version` now ignores auth/network errors (still reported
+  separately) while continuing to surface real API version mismatches.
+
 ## [0.12.17] - 2026-06-01
 
 ### Changed
