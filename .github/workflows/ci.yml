@@ -26,11 +26,11 @@ jobs:
       MONGODB_CONNECTION_STRING: "mongodb://your_user:your_password@localhost:27017"
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         fetch-depth: 0  # Fetch all history for all branches and tags
     - name: Set up Python 3.12
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
         python-version: "3.12"
     - name: Install dependencies
